@@ -8,8 +8,8 @@ package connectfour.test;
 
 /**
  *
- * @author Alex
+ * @author Alexander
  */
 public class TestClass {
-    
+    static int TEst;
 }
