@@ -12,4 +12,8 @@ package connectfour;
  */
 public class Test {
 
+    public void test() {
+    }
+    
+    
 }
