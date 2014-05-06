@@ -12,4 +12,6 @@ package connectfour;
  */
 public class Test {
 
+    
+    private int kusibi = 24;
 }
