@@ -74,7 +74,7 @@ public class WelcomeFrame {
             public void actionPerformed(ActionEvent e) {
                 // Destroy this window and create the game window
                 System.out.println("Clicked on single player");
-                
+                // TODO Zerstört das wirklich das objekt, denke nicht?
                 frame.setVisible(false);
                 
                 GameFrame gameFrame = new GameFrame();
