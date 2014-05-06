@@ -11,5 +11,5 @@ package connectfour.test;
  * @author Alexander
  */
 public class TestClass {
-    static int TEst;
+    static int TEst = 5;
 }
