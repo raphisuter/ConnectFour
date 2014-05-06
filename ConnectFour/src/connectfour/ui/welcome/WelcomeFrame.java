@@ -7,14 +7,11 @@
 package connectfour.ui.welcome;
 
 import connectfour.ui.game.GameFrame;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -39,6 +36,8 @@ public class WelcomeFrame {
        
         createSinglePlayerButton();
         createMultiPlayerButton();
+
+        // setGridSize(); oder so Ähnlich
  
         createLayout();
         setupLayout();
