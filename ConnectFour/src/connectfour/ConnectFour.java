@@ -18,6 +18,7 @@ public class ConnectFour {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.print("blabla");
+        System.out.print("blabla222");
     }
     
 }
