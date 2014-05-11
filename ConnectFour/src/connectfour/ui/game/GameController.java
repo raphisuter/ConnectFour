@@ -1,6 +1,6 @@
 package connectfour.ui.game;
 
-import java.awt.Color;
+import connectfour.model.Player;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,38 +17,43 @@ public class GameController {
     private GameView view;
 
     public GameController() {
-        this.model = new GameModel();
-        this.view = new GameView();
-        
-        // View intialisieren
-        view.updateCurrentPlayer(model.getCurrentPlayer());
-        
+        // Modell und View erzeugen
+        this.model = new GameModel(Player.createPlayer1(), Player.createPlayer2());
+        this.view = new GameView(model.getCurrentPlayer());
+
         // Agieren auf Kolonen Klicks
         this.view.addActionListenerToAllButtons(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                // TODO Nicht schön, dass es im e.getActionCommand ist.
+
+                // TODO Implementierung basiert auf dem Text des Buttons. Sollte geàndert werden.
                 int column = Integer.valueOf(e.getActionCommand());
-                
-                String currentPlayer = model.getCurrentPlayer();
-                Color currentPlayerColor = model.getCurrentPlayerColor();
-                
+
+                // Aktueller Spieler laden
+                Player currentPlayer = model.getCurrentPlayer();
+
+                // Stein werfen
                 model.throwStone(column);
-                
-                int x = model.getLastStoneX();
-                int y = model.getLastStoneY();
-                
+
+                // Laden der Position des geworfenen Steines
+                column = model.getLastStoneColumn();
+                int row = model.getLastStoneRow();
+
                 // View aktualisieren
-                view.drawStone(x, y, currentPlayerColor);
+                view.drawStone(column, row, currentPlayer.getColor());
                 view.updateCurrentPlayer(model.getCurrentPlayer());
-               
                 
-                
+                // Prüfen ob die Kolone noch Platz hat
+                if (model.isColumnFull(column)) {
+                    view.deactivateColumn(column);
+                }
             }
         });
     }
-    
+
+    /**
+     * Startet das UI.
+     */
     public void showView() {
         this.view.show();
     }

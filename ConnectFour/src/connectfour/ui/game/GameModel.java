@@ -1,72 +1,68 @@
 package connectfour.ui.game;
 
-import java.awt.Color;
+import connectfour.logic.ConnectFourLogic;
+import connectfour.logic.DefaultConnectFourLogic;
+import connectfour.model.Player;
 
 /**
- * Diese Klasse hält das Spielfeld als 2-dimensionales Array.
+ * Diese Klasse repräsentiert das Model.
  *
  * @author Alex
  */
 public class GameModel {
 
-    private final static int player1 = 1;
+    private final ConnectFourLogic logic;
 
-    private final static int player2 = 2;
-    
-    private final static Color player1Color = Color.YELLOW;
-    
-    private final static Color player2Color = Color.RED;
-    
-    private int currentPlayer;
-
-    private int lastStoneY = 0;
-    
-    private int lastStoneX = 0;
-    
-    public GameModel() {
-        currentPlayer = player1;
+    public GameModel(Player player1, Player player2) {
+        this.logic = new DefaultConnectFourLogic(player1, player2);
     }
-    
+
+    /**
+     * Wirft einen Stein des Spielers in die entsprechende Kolone. Und wechselt
+     * anschliessen den Spieler.
+     *
+     * @param column Kolone in welche der Stein geworfen wird.
+     */
     public void throwStone(int column) {
-          // entsprechende column füllen
-        
-          // check ob jemand gewonnen hat und das müsste dem controller gemeldet werden
-        
-          // view neu zeichnen
-  
-        lastStoneX = column;
-        lastStoneY++;
-        
-        // change player
-        tooglePlayer();
+        logic.throwStone(column);
+    }
+
+    /**
+     * Gibt den aktuellen Spieler zurück.
+     *
+     * @return Player Aktueller Spieler.
+     */
+    public Player getCurrentPlayer() {
+        return logic.getCurrentPlayer();
+    }
+
+    /**
+     * Gibt den Index der Reihe zurück, in welcher der letzte Stein geworfen
+     * wurde.
+     *
+     * @return int Index der Reihe des letzten Steines.
+     */
+    public int getLastStoneRow() {
+        return logic.getLastRow();
+    }
+
+    /**
+     * Gibt den Index der Kolone zurück, in welcher der letzte Stein geworfen
+     * wurde.
+     *
+     * @return int Index der Kolone des letzten Steines.
+     */
+    public int getLastStoneColumn() {
+        return logic.getLastColumn();
     }
     
-    public Color getCurrentPlayerColor() {
-        if (currentPlayer == player1) {
-            return player1Color;
-        } else {
-            return player2Color;
-        }
-    }
-    
-    public int getLastStoneX() {
-        return lastStoneX;
-    }
-    
-    public int getLastStoneY() {
-        return lastStoneY;
-    }
-    
-    private void tooglePlayer() {
-        if (currentPlayer == player1) {
-            currentPlayer = player2;
-        } else {
-            currentPlayer = player1;
-        }
-    }
-    
-    public String getCurrentPlayer() {
-        return String.valueOf(currentPlayer);
+    /**
+     * Prüft ob die Kolone voll ist.
+     * @param column Index der Kolone
+     * @return True, falls die Kolone voll ist sonst false.
+     */
+    public boolean isColumnFull(int column) {
+        return logic.isColumnFull(column);
     }
     
 }

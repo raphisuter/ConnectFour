@@ -1,5 +1,6 @@
 package connectfour.ui.game;
 
+import connectfour.model.Player;
 import connectfour.ui.util.CenterWindowUtil;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -24,14 +25,10 @@ public class GameView {
     
     private JLabel lblCurrentPlayer;
 
-    public GameView() {
-        initComponents();
-    }
-    
-    private void initComponents() {
+    public GameView(Player currentPlayer) {
         createFrame();
         createButtons();
-        createLabels();
+        createLabels(currentPlayer);
         createLayout();
         setupLayout();
     }
@@ -46,11 +43,11 @@ public class GameView {
         }
     }
     
-    public void updateCurrentPlayer(String player) {
-        this.lblCurrentPlayer.setText(player);
+    public void updateCurrentPlayer(Player player) {
+        this.lblCurrentPlayer.setText(player.getName());
     }
 
-    private void createLabels() {
+    private void createLabels(Player player) {
         this.lblCurrentPlayer = new JLabel();
         this.lblTextCurrentPlayer = new JLabel("Aktueller Spieler:");
         
@@ -88,8 +85,8 @@ public class GameView {
         frame.setLayout(null);
     }
     
-    public void drawStone(int x, int y, Color player) {
-        stoneLabels[x-1][y-1].setBackground(player);
+    public void drawStone(int x, int y, Color color) {
+        stoneLabels[x-1][y-1].setBackground(color);
     }
 
     private void setupLayout() {
@@ -118,6 +115,10 @@ public class GameView {
             }
         }
         
+    }
+    
+    public void deactivateColumn(int column) {
+        columnButtons[column].setEnabled(false);
     }
 
 }
