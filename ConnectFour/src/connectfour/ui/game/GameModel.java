@@ -1,5 +1,7 @@
 package connectfour.ui.game;
 
+import java.awt.Color;
+
 /**
  * Diese Klasse hält das Spielfeld als 2-dimensionales Array.
  *
@@ -11,8 +13,16 @@ public class GameModel {
 
     private final static int player2 = 2;
     
+    private final static Color player1Color = Color.YELLOW;
+    
+    private final static Color player2Color = Color.RED;
+    
     private int currentPlayer;
 
+    private int lastStoneY = 0;
+    
+    private int lastStoneX = 0;
+    
     public GameModel() {
         currentPlayer = player1;
     }
@@ -24,9 +34,27 @@ public class GameModel {
         
           // view neu zeichnen
   
+        lastStoneX = column;
+        lastStoneY++;
         
         // change player
         tooglePlayer();
+    }
+    
+    public Color getCurrentPlayerColor() {
+        if (currentPlayer == player1) {
+            return player1Color;
+        } else {
+            return player2Color;
+        }
+    }
+    
+    public int getLastStoneX() {
+        return lastStoneX;
+    }
+    
+    public int getLastStoneY() {
+        return lastStoneY;
     }
     
     private void tooglePlayer() {

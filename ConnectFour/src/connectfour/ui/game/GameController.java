@@ -1,5 +1,6 @@
 package connectfour.ui.game;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,10 +30,21 @@ public class GameController {
                 
                 // TODO Nicht schön, dass es im e.getActionCommand ist.
                 int column = Integer.valueOf(e.getActionCommand());
+                
+                String currentPlayer = model.getCurrentPlayer();
+                Color currentPlayerColor = model.getCurrentPlayerColor();
+                
                 model.throwStone(column);
                 
+                int x = model.getLastStoneX();
+                int y = model.getLastStoneY();
+                
                 // View aktualisieren
+                view.drawStone(x, y, currentPlayerColor);
                 view.updateCurrentPlayer(model.getCurrentPlayer());
+               
+                
+                
             }
         });
     }

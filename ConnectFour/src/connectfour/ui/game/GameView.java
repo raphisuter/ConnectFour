@@ -1,6 +1,7 @@
 package connectfour.ui.game;
 
 import connectfour.ui.util.CenterWindowUtil;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,23 +18,20 @@ public class GameView {
 
     private JButton[] columnButtons;
     
+    private JLabel[][] stoneLabels;
+    
     private JLabel lblTextCurrentPlayer;
     
     private JLabel lblCurrentPlayer;
 
     public GameView() {
-
         initComponents();
-
     }
     
     private void initComponents() {
         createFrame();
         createButtons();
-        
-        this.lblCurrentPlayer = new JLabel();
-        this.lblTextCurrentPlayer = new JLabel("Aktueller Spieler:");
-        
+        createLabels();
         createLayout();
         setupLayout();
     }
@@ -52,6 +50,23 @@ public class GameView {
         this.lblCurrentPlayer.setText(player);
     }
 
+    private void createLabels() {
+        this.lblCurrentPlayer = new JLabel();
+        this.lblTextCurrentPlayer = new JLabel("Aktueller Spieler:");
+        
+        stoneLabels = new JLabel[7][6]; // TODO REFACTOR ANZAHL COLUMNS
+
+        for (int c = 0; c < stoneLabels.length; c++) {
+            for (int r = 0; r < stoneLabels[c].length; r++) {
+                stoneLabels[c][r] = new JLabel();
+                stoneLabels[c][r].setBackground(Color.white);
+                stoneLabels[c][r].setOpaque(true);
+                stoneLabels[c][r].setText(String.valueOf(c) + " " + String.valueOf(r));
+            }
+        }
+       
+    }
+    
     private void createFrame() {
         frame = new JFrame("Connect 4 - Game");
         frame.setSize(500, 500);
@@ -65,14 +80,16 @@ public class GameView {
 
         for (int i = 0; i < columnButtons.length; i++) {
             columnButtons[i] = new JButton(String.valueOf(i + 1));
-            
         }
-        
         
     }
 
     private void createLayout() {
         frame.setLayout(null);
+    }
+    
+    public void drawStone(int x, int y, Color player) {
+        stoneLabels[x-1][y-1].setBackground(player);
     }
 
     private void setupLayout() {
@@ -89,6 +106,18 @@ public class GameView {
             frame.getContentPane().add(button);
             i++;
         }
+        
+        for (int c = 0; c < stoneLabels.length; c++) {
+            for (int r = 0; r < stoneLabels[c].length; r++) {
+                JLabel lbl = stoneLabels[c][r];
+                System.out.println("hey");
+                lbl.setBounds(10 + c * 70, 400 - r * 55, 45, 45);
+                
+                //lbl.setBounds(10, 120, 45, 45);
+                frame.getContentPane().add(lbl);
+            }
+        }
+        
     }
 
 }
