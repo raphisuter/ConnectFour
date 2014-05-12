@@ -6,7 +6,8 @@
 
 package connectfour;
 
-import connectfour.ui.welcome.WelcomeFrame;
+import connectfour.ui.welcome.WelcomeController;
+import connectfour.ui.welcome.WelcomeView;
 
 /**
  *
@@ -25,8 +26,8 @@ public class ConnectFour {
         System.out.println("Game is starting..."); 
         
         // Start Game - Es gibt eine Network und eine KI Implementation des Spiels
-        WelcomeFrame frame = new WelcomeFrame();
-        frame.show();
+        WelcomeController controller = new WelcomeController();
+        controller.showView();
         
     }
     
