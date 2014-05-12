@@ -52,13 +52,14 @@ public class GameController {
 
                 // Wait on enemy
                 // TODO Busy Waiting is bad
+                // TODO Mir ist noch nicht ganz klar - wie das läuft
                 boolean enemyHasMakeAThrow = false;
                 while (!enemyHasMakeAThrow) {
-                    try {
+                    /*try {
                         Thread.sleep(3000);
                     } catch (InterruptedException exp) {
                         exp.printStackTrace();;
-                    }
+                    }*/
                     enemyHasMakeAThrow = true;
                     // Get zug
                 }

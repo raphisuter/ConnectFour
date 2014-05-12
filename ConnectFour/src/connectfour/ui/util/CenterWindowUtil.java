@@ -4,10 +4,14 @@ import java.awt.Dimension;
 import java.awt.Window;
 
 /**
- * Class to center a window.
+ * Hilfs-Klasse um Windows zu zentrieren.
  */
 public class CenterWindowUtil {
 
+    /**
+     * Diese Methode mittet ein Window ein.
+     * @param window Window, welches eingemittet werden soll.
+     */
     public static void center(Window window) {
         Dimension dimension = window.getToolkit().getScreenSize();
         int screenWidth = dimension.width;
