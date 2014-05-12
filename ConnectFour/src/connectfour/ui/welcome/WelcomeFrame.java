@@ -1,7 +1,6 @@
 package connectfour.ui.welcome;
 
 import connectfour.ui.game.GameController;
-import connectfour.ui.game.GameView;
 import connectfour.ui.util.CenterWindowUtil;
 
 import javax.swing.*;
