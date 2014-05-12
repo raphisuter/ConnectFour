@@ -6,8 +6,6 @@
 
 package connectfour.ui.welcome;
 
-import javax.swing.JButton;
-
 /**
  *
  * @author Markus
@@ -19,8 +17,6 @@ public class WelcomeModel {
     private boolean playHuman;
     
     private String playerName;
-    
-    
     
     public WelcomeModel()
     {
