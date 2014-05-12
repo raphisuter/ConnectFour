@@ -2,11 +2,14 @@ package connectfour.ui.game;
 
 import connectfour.model.Player;
 import connectfour.ui.util.CenterWindowUtil;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 /**
  * Präsentiert die Spielansicht.
@@ -20,13 +23,13 @@ public class GameView {
     private JButton[] columnButtons;
 
     private JLabel[][] stoneLabels;
-    
+
     private JLabel lblPlayer1Color;
-    
+
     private JLabel lblPlayer2Color;
 
     private JLabel lblPlayer1Name;
-    
+
     private JLabel lblPlayer2Name;
 
     public int getMaxCol() {
@@ -48,7 +51,7 @@ public class GameView {
     private int maxCol = 7;
 
     private int maxRow = 6;
-
+    
     public GameView(Player player1, Player player2) {
         createFrame();
         createButtons();
@@ -66,11 +69,11 @@ public class GameView {
             button.addActionListener(listener);
         }
     }
-    
+
     public void updateCurrentPlayer(Player player) {
         Border borderCurrentPlayer = BorderFactory.createLineBorder(Color.BLACK, 3);
         Border borderOtherPlayer = null;
-        
+
         if (this.lblPlayer1Color.getBackground().equals(player.getColor())) {
             this.lblPlayer1Color.setBorder(borderCurrentPlayer);
             this.lblPlayer2Color.setBorder(borderOtherPlayer);
@@ -83,15 +86,15 @@ public class GameView {
     private void createLabels(Player player1, Player player2) {
         this.lblPlayer1Name = new JLabel(player1.getName());
         this.lblPlayer2Name = new JLabel(player2.getName());
-        
+
         this.lblPlayer1Color = new JLabel();
         this.lblPlayer1Color.setBackground(player1.getColor());
         this.lblPlayer1Color.setOpaque(true);
-        
+
         this.lblPlayer2Color = new JLabel();
         this.lblPlayer2Color.setBackground(player2.getColor());
         this.lblPlayer2Color.setOpaque(true);
-        
+
         stoneLabels = new JLabel[maxCol][maxRow]; // TODO REFACTOR ANZAHL COLUMNS
 
         for (int c = 0; c < stoneLabels.length; c++) {
@@ -101,9 +104,9 @@ public class GameView {
                 stoneLabels[c][r].setOpaque(true);
             }
         }
-       
+
     }
-    
+
     private void createFrame() {
         frame = new JFrame("Connect 4 - Game");
         frame.setSize(500, 500);
@@ -118,59 +121,63 @@ public class GameView {
         for (int i = 0; i < columnButtons.length; i++) {
             columnButtons[i] = new JButton(String.valueOf(i + 1));
         }
-        
+
     }
 
     private void createLayout() {
         frame.setLayout(null);
     }
-    
+
     public void drawStone(int x, int y, Color color) {
-        stoneLabels[x-1][y-1].setBackground(color);
+        stoneLabels[x - 1][y - 1].setBackground(color);
     }
 
     private void setupLayout() {
         this.lblPlayer1Name.setBounds(30, 12, 100, 30);
         frame.getContentPane().add(lblPlayer1Name);
-        
+
         this.lblPlayer2Name.setBounds(30, 32, 100, 30);
         frame.getContentPane().add(lblPlayer2Name);
-        
+
         this.lblPlayer1Color.setBounds(10, 20, 15, 15);
         frame.getContentPane().add(lblPlayer1Color);
-        
+
         this.lblPlayer2Color.setBounds(10, 40, 15, 15);
         frame.getContentPane().add(lblPlayer2Color);
-        
+
         int i = 0;
         for (JButton button : this.columnButtons) {
             button.setBounds(10 + i * 70, 70, 45, 30);
             frame.getContentPane().add(button);
             i++;
         }
-        
+
         for (int c = 0; c < stoneLabels.length; c++) {
             for (int r = 0; r < stoneLabels[c].length; r++) {
-                JLabel lbl = stoneLabels[c][r];               
+                JLabel lbl = stoneLabels[c][r];
                 lbl.setBounds(10 + c * 70, 400 - r * 55, 45, 45);
                 frame.getContentPane().add(lbl);
             }
         }
-        
+
     }
-    
+
     public void deactivateAllColumns() {
         for (JButton button : columnButtons) {
-           button.setEnabled(false);
+            button.setEnabled(false);
         }
     }
-    
+
     public void deactivateColumn(int column) {
         columnButtons[column].setEnabled(false);
     }
-    
+
     public void activateColumn(int column) {
         columnButtons[column].setEnabled(true);
+    }
+
+    public void showWinner(Player player) {
+        JOptionPane.showMessageDialog(this.frame, player.getName() + " hat gewonnen.");
     }
 
 }
