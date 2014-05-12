@@ -17,9 +17,13 @@ public class GameController {
     private GameView view;
 
     public GameController() {
+        Player player1 = Player.createPlayer1();
+        Player player2 = Player.createPlayer2();
+        
         // Modell und View erzeugen
-        this.model = new GameModel(Player.createPlayer1(), Player.createPlayer2());
-        this.view = new GameView(model.getCurrentPlayer());
+        this.model = new GameModel(player1, player2);
+        this.view = new GameView(player1, player2);
+        this.view.updateCurrentPlayer(this.model.getCurrentPlayer());
 
         // Agieren auf Kolonen Klicks
         this.view.addActionListenerToAllButtons(new ActionListener() {

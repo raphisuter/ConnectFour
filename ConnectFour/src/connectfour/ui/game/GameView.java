@@ -4,9 +4,11 @@ import connectfour.model.Player;
 import connectfour.ui.util.CenterWindowUtil;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
 
 /**
  * Präsentiert die Spielansicht.
@@ -21,14 +23,18 @@ public class GameView {
     
     private JLabel[][] stoneLabels;
     
-    private JLabel lblTextCurrentPlayer;
+    private JLabel lblPlayer1Color;
     
-    private JLabel lblCurrentPlayer;
+    private JLabel lblPlayer2Color;
 
-    public GameView(Player currentPlayer) {
+    private JLabel lblPlayer1Name;
+    
+    private JLabel lblPlayer2Name;
+
+    public GameView(Player player1, Player player2) {
         createFrame();
         createButtons();
-        createLabels(currentPlayer);
+        createLabels(player1, player2);
         createLayout();
         setupLayout();
     }
@@ -44,12 +50,29 @@ public class GameView {
     }
     
     public void updateCurrentPlayer(Player player) {
-        this.lblCurrentPlayer.setText(player.getName());
+        Border borderCurrentPlayer = BorderFactory.createLineBorder(Color.BLACK, 3);
+        Border borderOtherPlayer = null;
+        
+        if (this.lblPlayer1Color.getBackground().equals(player.getColor())) {
+            this.lblPlayer1Color.setBorder(borderCurrentPlayer);
+            this.lblPlayer2Color.setBorder(borderOtherPlayer);
+        } else {
+            this.lblPlayer2Color.setBorder(borderCurrentPlayer);
+            this.lblPlayer1Color.setBorder(borderOtherPlayer);
+        }
     }
 
-    private void createLabels(Player player) {
-        this.lblCurrentPlayer = new JLabel();
-        this.lblTextCurrentPlayer = new JLabel("Aktueller Spieler:");
+    private void createLabels(Player player1, Player player2) {
+        this.lblPlayer1Name = new JLabel(player1.getName());
+        this.lblPlayer2Name = new JLabel(player2.getName());
+        
+        this.lblPlayer1Color = new JLabel();
+        this.lblPlayer1Color.setBackground(player1.getColor());
+        this.lblPlayer1Color.setOpaque(true);
+        
+        this.lblPlayer2Color = new JLabel();
+        this.lblPlayer2Color.setBackground(player2.getColor());
+        this.lblPlayer2Color.setOpaque(true);
         
         stoneLabels = new JLabel[7][6]; // TODO REFACTOR ANZAHL COLUMNS
 
@@ -58,7 +81,6 @@ public class GameView {
                 stoneLabels[c][r] = new JLabel();
                 stoneLabels[c][r].setBackground(Color.white);
                 stoneLabels[c][r].setOpaque(true);
-                stoneLabels[c][r].setText(String.valueOf(c) + " " + String.valueOf(r));
             }
         }
        
@@ -90,12 +112,17 @@ public class GameView {
     }
 
     private void setupLayout() {
-        lblCurrentPlayer.setText("ddd");
-        this.lblCurrentPlayer.setBounds(110, 30, 100, 30);
-        frame.getContentPane().add(lblCurrentPlayer);
+        this.lblPlayer1Name.setBounds(30, 12, 100, 30);
+        frame.getContentPane().add(lblPlayer1Name);
         
-        lblTextCurrentPlayer.setBounds(10, 30, 100, 30);
-        frame.getContentPane().add(lblTextCurrentPlayer);
+        this.lblPlayer2Name.setBounds(30, 32, 100, 30);
+        frame.getContentPane().add(lblPlayer2Name);
+        
+        this.lblPlayer1Color.setBounds(10, 20, 15, 15);
+        frame.getContentPane().add(lblPlayer1Color);
+        
+        this.lblPlayer2Color.setBounds(10, 40, 15, 15);
+        frame.getContentPane().add(lblPlayer2Color);
         
         int i = 0;
         for (JButton button : this.columnButtons) {
@@ -106,11 +133,8 @@ public class GameView {
         
         for (int c = 0; c < stoneLabels.length; c++) {
             for (int r = 0; r < stoneLabels[c].length; r++) {
-                JLabel lbl = stoneLabels[c][r];
-                System.out.println("hey");
+                JLabel lbl = stoneLabels[c][r];               
                 lbl.setBounds(10 + c * 70, 400 - r * 55, 45, 45);
-                
-                //lbl.setBounds(10, 120, 45, 45);
                 frame.getContentPane().add(lbl);
             }
         }
