@@ -2,13 +2,11 @@ package connectfour.ui.game;
 
 import connectfour.model.Player;
 import connectfour.ui.util.CenterWindowUtil;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
+import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Präsentiert die Spielansicht.
@@ -20,7 +18,7 @@ public class GameView {
     private JFrame frame;
 
     private JButton[] columnButtons;
-    
+
     private JLabel[][] stoneLabels;
     
     private JLabel lblPlayer1Color;
@@ -30,6 +28,26 @@ public class GameView {
     private JLabel lblPlayer1Name;
     
     private JLabel lblPlayer2Name;
+
+    public int getMaxCol() {
+        return maxCol;
+    }
+
+    public void setMaxCol(int maxCol) {
+        this.maxCol = maxCol;
+    }
+
+    public int maxRow() {
+        return maxRow;
+    }
+
+    public void setMaxRow(int maxRow) {
+        this.maxRow = maxRow;
+    }
+
+    private int maxCol = 7;
+
+    private int maxRow = 6;
 
     public GameView(Player player1, Player player2) {
         createFrame();
@@ -74,7 +92,7 @@ public class GameView {
         this.lblPlayer2Color.setBackground(player2.getColor());
         this.lblPlayer2Color.setOpaque(true);
         
-        stoneLabels = new JLabel[7][6]; // TODO REFACTOR ANZAHL COLUMNS
+        stoneLabels = new JLabel[maxCol][maxRow]; // TODO REFACTOR ANZAHL COLUMNS
 
         for (int c = 0; c < stoneLabels.length; c++) {
             for (int r = 0; r < stoneLabels[c].length; r++) {
@@ -95,7 +113,7 @@ public class GameView {
     }
 
     private void createButtons() {
-        columnButtons = new JButton[7]; // TODO REFACTOR ANZAHL COLUMNS
+        columnButtons = new JButton[maxCol]; // TODO REFACTOR ANZAHL COLUMNS
 
         for (int i = 0; i < columnButtons.length; i++) {
             columnButtons[i] = new JButton(String.valueOf(i + 1));
