@@ -45,6 +45,11 @@ public class GameController {
 
                 // View aktualisieren
                 view.drawStone(column, row, currentPlayer.getColor());
+
+                if (model.hasWon()) {
+                    view.showWinner(model.getWinner());
+                }
+
                 view.updateCurrentPlayer(model.getCurrentPlayer());
 
                 // Warten auf Zug des anderen Spielers
@@ -56,10 +61,10 @@ public class GameController {
                 boolean enemyHasMakeAThrow = false;
                 while (!enemyHasMakeAThrow) {
                     /*try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException exp) {
-                        exp.printStackTrace();;
-                    }*/
+                     Thread.sleep(3000);
+                     } catch (InterruptedException exp) {
+                     exp.printStackTrace();;
+                     }*/
                     enemyHasMakeAThrow = true;
                     // Get zug
                 }

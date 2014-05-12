@@ -66,13 +66,32 @@ public class GameModel {
     public boolean isColumnFull(int column) {
         return logic.isColumnFull(column);
     }
-    
+
     /**
      * Gibt Indexe aller nicht vollen Kolonen zurück.
+     *
      * @return int[] Indexe aller nicht vollen Kolonen.
      */
     public int[] getAllNotFullColumns() {
         return logic.getAllNotFullColumns();
+    }
+
+    /**
+     * Prüft ob ein Spieler gewonnen hat.
+     *
+     * @return boolean True, falls jemand gewonnen hat, anderenfalls false.
+     */
+    public boolean hasWon() {
+        return logic.hasWon();
+    }
+
+    /**
+     * Gibt den Gewinner zurück.
+     *
+     * @return Player Gibt den Spieler zurück, welche das Spiel gewonnen hat.
+     */
+    public Player getWinner() {
+        return logic.getWinner();
     }
 
 }
