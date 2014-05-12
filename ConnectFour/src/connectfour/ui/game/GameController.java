@@ -19,7 +19,7 @@ public class GameController {
     public GameController() {
         Player player1 = Player.createPlayer1();
         Player player2 = Player.createPlayer2();
-        
+
         // Modell und View erzeugen
         this.model = new GameModel(player1, player2);
         this.view = new GameView(player1, player2);
@@ -46,10 +46,26 @@ public class GameController {
                 // View aktualisieren
                 view.drawStone(column, row, currentPlayer.getColor());
                 view.updateCurrentPlayer(model.getCurrentPlayer());
-                
+
+                // Warten auf Zug des anderen Spielers
+                view.deactivateAllColumns();
+
+                // Wait on enemy
+                // TODO Busy Waiting is bad
+                boolean enemyHasMakeAThrow = false;
+                while (!enemyHasMakeAThrow) {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException exp) {
+                        exp.printStackTrace();;
+                    }
+                    enemyHasMakeAThrow = true;
+                    // Get zug
+                }
+
                 // Prüfen ob die Kolone noch Platz hat
-                if (model.isColumnFull(column)) {
-                    view.deactivateColumn(column);
+                for (int notFullColumn : model.getAllNotFullColumns()) {
+                    view.activateColumn(notFullColumn);
                 }
             }
         });

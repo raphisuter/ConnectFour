@@ -57,5 +57,11 @@ public interface ConnectFourLogic {
      * @return True, falls die Kolone voll ist, anderenfalls false.
      */
     boolean isColumnFull(int column);
+    
+    /**
+     * Gibt alle Index der Kolonen zurück, welche nicht voll sind.
+     * @return int[] Index aller nicht vollen Kolonen.
+     */
+    int[] getAllNotFullColumns();
 
 }

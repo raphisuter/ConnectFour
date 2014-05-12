@@ -141,8 +141,18 @@ public class GameView {
         
     }
     
+    public void deactivateAllColumns() {
+        for (JButton button : columnButtons) {
+           button.setEnabled(false);
+        }
+    }
+    
     public void deactivateColumn(int column) {
         columnButtons[column].setEnabled(false);
+    }
+    
+    public void activateColumn(int column) {
+        columnButtons[column].setEnabled(true);
     }
 
 }

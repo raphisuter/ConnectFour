@@ -5,7 +5,8 @@ import connectfour.logic.DefaultConnectFourLogic;
 import connectfour.model.Player;
 
 /**
- * Diese Klasse repräsentiert das Model.
+ * Diese Klasse repräsentiert das Model. Diese Klasse delegiert alle Aufrufe an
+ * die Logik-Komponente.
  *
  * @author Alex
  */
@@ -55,9 +56,10 @@ public class GameModel {
     public int getLastStoneColumn() {
         return logic.getLastColumn();
     }
-    
+
     /**
      * Prüft ob die Kolone voll ist.
+     *
      * @param column Index der Kolone
      * @return True, falls die Kolone voll ist sonst false.
      */
@@ -65,4 +67,12 @@ public class GameModel {
         return logic.isColumnFull(column);
     }
     
+    /**
+     * Gibt Indexe aller nicht vollen Kolonen zurück.
+     * @return int[] Indexe aller nicht vollen Kolonen.
+     */
+    public int[] getAllNotFullColumns() {
+        return logic.getAllNotFullColumns();
+    }
+
 }

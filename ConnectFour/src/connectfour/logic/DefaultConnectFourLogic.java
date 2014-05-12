@@ -51,4 +51,9 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
        return false;
     }
     
+    @Override
+    public int[] getAllNotFullColumns() {
+        return new int[]{2,5};
+    }
+    
 }
