@@ -15,7 +15,7 @@ public class DefaultConnectFourLogic extends GameController implements ConnectFo
 
     private GameView view;
 
-    private int maxRow = view.maxRow();
+    private int maxRow = view.getMaxRow();
 
     private int maxCol = view.getMaxCol();
 

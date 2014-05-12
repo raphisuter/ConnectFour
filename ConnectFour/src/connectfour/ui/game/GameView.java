@@ -37,7 +37,7 @@ public class GameView {
         this.maxCol = maxCol;
     }
 
-    public int maxRow() {
+    public int getMaxRow() {
         return maxRow;
     }
 
