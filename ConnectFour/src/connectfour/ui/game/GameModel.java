@@ -14,8 +14,8 @@ public class GameModel {
 
     private final ConnectFourLogic logic;
 
-    public GameModel(Player player1, Player player2) {
-        this.logic = new DefaultConnectFourLogic(player1, player2);
+    public GameModel(Player player1, Player player2, int columns, int rows) {
+        this.logic = new DefaultConnectFourLogic(player1, player2, columns, rows);
     }
 
     /**

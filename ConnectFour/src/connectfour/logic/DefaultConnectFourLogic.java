@@ -1,25 +1,20 @@
 package connectfour.logic;
 
 import connectfour.model.Player;
-import connectfour.ui.game.GameController;
-import connectfour.ui.game.GameView;
 
 import java.util.Random;
 
-// TODO Diese Klasse muss korrekt implementiert werden!
-public class DefaultConnectFourLogic extends GameController implements ConnectFourLogic {
+public class DefaultConnectFourLogic implements ConnectFourLogic {
 
     private Player player1;
     
     private Player player2;
-
-    private GameView view;
-
-    private int maxRow = view.getMaxRow();
-
-    private int maxCol = view.getMaxCol();
-
-    private int[][] theArray = new int[maxCol][maxRow];
+    
+    private int maxCol;
+    
+    private int maxRow;
+    
+    private int[][] theArray;
 
     private int lastRow = 0;
 
@@ -27,19 +22,24 @@ public class DefaultConnectFourLogic extends GameController implements ConnectFo
 
     private Player winner = null;
 
-    private int[] notFullCols = new int[maxCol];
+    private int[] notFullCols;
 
-    public DefaultConnectFourLogic(Player player1, Player player2) {
+    public DefaultConnectFourLogic(Player player1, Player player2, int cols, int rows) {
         this.player1 = player1;
         this.player2 = player2;
 
+        this.maxCol = cols;
+        this.maxRow = rows;
+     
+        this.theArray = new int[maxCol][maxRow];
+        this.notFullCols = new int[maxCol];
     }
     
     @Override
     public void throwStone(int column) {
         lastCol = column;
 
-        theArray[lastCol][lastRow] = 1;
+        theArray[lastCol][lastRow] = 1; // TODO WORKING WITH ID OF PLAYER
 
         lastRow ++;
     }
@@ -129,7 +129,6 @@ public class DefaultConnectFourLogic extends GameController implements ConnectFo
 
     @Override
     public boolean isColumnFull(int column) {
-
        if (lastCol == maxCol) {
            return true;
        } else {
@@ -140,14 +139,12 @@ public class DefaultConnectFourLogic extends GameController implements ConnectFo
     @Override
     public int[] getAllNotFullColumns() {
         int i = 0;
-
         for (int col=0; col<maxCol; col++) {
             if(!isColumnFull(col)){
                 notFullCols[i] = col;
                 i++;
             }
         }
-
         return notFullCols;
     }
     

@@ -32,27 +32,14 @@ public class GameView {
 
     private JLabel lblPlayer2Name;
 
-    public int getMaxCol() {
-        return maxCol;
-    }
+    private final int columns;
 
-    public void setMaxCol(int maxCol) {
-        this.maxCol = maxCol;
-    }
+    private final int rows;
 
-    public int getMaxRow() {
-        return maxRow;
-    }
+    public GameView(Player player1, Player player2, int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
 
-    public void setMaxRow(int maxRow) {
-        this.maxRow = maxRow;
-    }
-
-    private int maxCol = 7;
-
-    private int maxRow = 6;
-    
-    public GameView(Player player1, Player player2) {
         createFrame();
         createButtons();
         createLabels(player1, player2);
@@ -95,7 +82,7 @@ public class GameView {
         this.lblPlayer2Color.setBackground(player2.getColor());
         this.lblPlayer2Color.setOpaque(true);
 
-        stoneLabels = new JLabel[maxCol][maxRow]; // TODO REFACTOR ANZAHL COLUMNS
+        stoneLabels = new JLabel[columns][rows];
 
         for (int c = 0; c < stoneLabels.length; c++) {
             for (int r = 0; r < stoneLabels[c].length; r++) {
@@ -104,7 +91,6 @@ public class GameView {
                 stoneLabels[c][r].setOpaque(true);
             }
         }
-
     }
 
     private void createFrame() {
@@ -116,7 +102,7 @@ public class GameView {
     }
 
     private void createButtons() {
-        columnButtons = new JButton[maxCol]; // TODO REFACTOR ANZAHL COLUMNS
+        columnButtons = new JButton[columns];
 
         for (int i = 0; i < columnButtons.length; i++) {
             columnButtons[i] = new JButton(String.valueOf(i + 1));
@@ -159,7 +145,6 @@ public class GameView {
                 frame.getContentPane().add(lbl);
             }
         }
-
     }
 
     public void deactivateAllColumns() {
@@ -179,5 +164,4 @@ public class GameView {
     public void showWinner(Player player) {
         JOptionPane.showMessageDialog(this.frame, player.getName() + " hat gewonnen.");
     }
-
 }
