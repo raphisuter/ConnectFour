@@ -5,8 +5,6 @@ import connectfour.ui.game.GameController;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -38,11 +36,11 @@ public class WelcomeController {
 
         });
 
-        this.view.addActionListenerMultiPlayer(new ActionListener() {
+        this.view.addActionListenerMultiPlayerOpen(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String player = view.getChoice();
+                String player = "Testperson";
                 if (player != null) {
                     System.out.println(player);
                     model.setPlayComputer(false);
@@ -56,20 +54,35 @@ public class WelcomeController {
                     GameController controller = new GameController(player1, player2);
                     controller.showView();
                 } else {
-                    view.showNoChoice();
+                   // view.showNoChoice();
                 }
             }
 
         });
-
-        this.view.addActionListenerMultiPlayerSelection(new ListSelectionListener() {
-
+        
+        this.view.addActionListenerMultiPlayerJoin(new ActionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
-                view.hideNoChoice();
+            public void actionPerformed(ActionEvent e) {
+
+                String player = "Testperson";
+                if (player != null) {
+                    System.out.println(player);
+                    model.setPlayComputer(false);
+                    model.setPlayHuman(true);
+
+                    view.close();
+
+                    Player player1 = new Player(10, player, Color.MAGENTA);
+                    Player player2 = Player.createPlayer2();
+                    
+                    GameController controller = new GameController(player1, player2);
+                    controller.showView();
+                } 
             }
 
         });
+
+       
     }
 
     public void showView() {
