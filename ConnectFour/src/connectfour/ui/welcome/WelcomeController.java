@@ -1,6 +1,8 @@
 package connectfour.ui.welcome;
 
+import connectfour.model.Player;
 import connectfour.ui.game.GameController;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -27,7 +29,10 @@ public class WelcomeController {
                 model.setPlayHuman(false);
                 view.close();
 
-                GameController controller = new GameController();
+                Player player1 = Player.createPlayer1();
+                Player player2 = Player.createPlayer2();
+                
+                GameController controller = new GameController(player1, player2);
                 controller.showView();
             }
 
@@ -45,7 +50,10 @@ public class WelcomeController {
 
                     view.close();
 
-                    GameController controller = new GameController();
+                    Player player1 = new Player(10, player, Color.MAGENTA);
+                    Player player2 = Player.createPlayer2();
+                    
+                    GameController controller = new GameController(player1, player2);
                     controller.showView();
                 } else {
                     view.showNoChoice();

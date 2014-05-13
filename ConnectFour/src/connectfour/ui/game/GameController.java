@@ -16,10 +16,7 @@ public class GameController {
 
     private GameView view;
 
-    public GameController() {
-        Player player1 = Player.createPlayer1(); // TODO müssen von aussen gesetzt werden
-        Player player2 = Player.createPlayer2(); // TODO müssen von aussen gesetzt werden
-
+    public GameController(Player player1, Player player2) {
         // Modell und View erzeugen
         this.model = new GameModel(player1, player2, 7, 6); // TODO Duplicated Code
         this.view = new GameView(player1, player2, 7, 6); //  TODO Duplicated Code!
