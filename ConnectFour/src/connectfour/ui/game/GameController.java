@@ -40,35 +40,31 @@ public class GameController {
                 model.throwStone(column);
 
                 // Laden der Position des geworfenen Steines
-                column = model.getLastStoneColumn();
-                int row = model.getLastStoneRow();
+                int lastColumn = model.getLastStoneColumn();
+                int lastRow = model.getLastStoneRow();
 
                 // View aktualisieren
-                view.drawStone(column, row, currentPlayer.getColor());
+                view.drawStone(lastColumn, lastRow, currentPlayer.getColor());
 
-                // 
-                
+                // Prüfen ob jemand gewonnen hat.
                 if (model.hasWon()) {
                     view.showWinner(model.getWinner());
+                    view.close();
                 }
 
+                // Nach dem Zug, wechselt der aktuelle Spieler
                 view.updateCurrentPlayer(model.getCurrentPlayer());
-
+                
                 // Warten auf Zug des anderen Spielers
                 view.deactivateAllColumns();
+                
+                // TODO Zug an Gegner senden
+                
+                // TODO Zug von Gegner erhalten
 
-                // Wait on enemy
-                // TODO Busy Waiting is bad
-                // TODO Mir ist noch nicht ganz klar - wie das läuft
                 boolean enemyHasMakeAThrow = false;
                 while (!enemyHasMakeAThrow) {
-                    /*try {
-                     Thread.sleep(3000);
-                     } catch (InterruptedException exp) {
-                     exp.printStackTrace();;
-                     }*/
                     enemyHasMakeAThrow = true;
-                    // Get zug
                 }
 
                 // Prüfen ob die Kolone noch Platz hat

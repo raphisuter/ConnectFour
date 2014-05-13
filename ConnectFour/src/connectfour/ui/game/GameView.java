@@ -164,4 +164,9 @@ public class GameView {
     public void showWinner(Player player) {
         JOptionPane.showMessageDialog(this.frame, player.getName() + " hat gewonnen.");
     }
+    
+    public void close() {
+        this.frame.setVisible(false);
+        this.frame.dispose();
+    }
 }
