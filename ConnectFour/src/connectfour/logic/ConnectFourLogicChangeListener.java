@@ -18,4 +18,6 @@ public interface ConnectFourLogicChangeListener {
     
     void notifyColumnIsFull(int column);
     
+    void gameFinishedNoWinner();
+    
 }

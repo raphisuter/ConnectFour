@@ -15,16 +15,65 @@ public class GameController {
     private GameModel model;
 
     private GameView view;
+    
+    private final Player player1;
+    
+    private final Player player2;
 
-    public GameController(Player player1, Player player2) {
+    private final int columns = 7;
+    
+    private final int rows = 6;
+    
+    public GameController(Player startPlayer, Player otherPlayer) {
+        this.player1 = startPlayer;
+        this.player2 = otherPlayer;
+        
+        setup();
+    }
 
+    /**
+     * Startet das UI.
+     */
+    public void showView() {
+        this.view.show();
+    }
+    
+    private void setup() {
         // Modell und View erzeugen
-        view = new GameView(player1, player2, 7, 6);
-        model = new GameModel(player1, player2, 7, 6);
+        view = new GameView(player1, player2, columns, rows);
+        model = new GameModel(player1, player2, columns, rows);
         model.addConnectFourLogicChangeListener(view.getConnectFourLogicChangeListener());
 
-        // Agieren auf Kolonen Klicks
-        this.view.addActionListenerToAllButtons(new ActionListener() {
+        // Action Listener registrieren
+        view.addActionListenerToAllButtons(createActionListenerColumns());
+        view.addActionListenerClose(createActionListenerClose());
+        view.addActionListenerRestart(createActionListenerRestart());
+    }
+    
+    private ActionListener createActionListenerClose() {
+        return new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.close();
+            }
+        };
+    }
+    
+    private ActionListener createActionListenerRestart() {
+        return new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.close();
+                setup();
+                view.show();
+            }
+        };
+    }
+    
+    private ActionListener createActionListenerColumns() {
+        return new ActionListener() {
            
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,30 +83,7 @@ public class GameController {
                 // Stein werfen
                 model.throwStone(column);
             }
-        });
-
-        this.view.addActionListenerClose(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                view.close();
-            }
-        });
-
-        this.view.addActionListenerRestart(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("restart");
-            }
-        });
-    }
-
-    /**
-     * Startet das UI.
-     */
-    public void showView() {
-        this.view.show();
+        };
     }
 
 }
