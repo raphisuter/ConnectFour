@@ -1,6 +1,7 @@
 package connectfour.ui.welcome;
 
 import connectfour.ui.util.CenterWindowUtil;
+import connectfour.ui.util.Icon;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -69,6 +70,7 @@ public class WelcomeView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CenterWindowUtil.center(frame);
         frame.setResizable(false);
+        frame.setIconImages(Icon.getIconListGamepad());
     }
 
     private void createLayout() {

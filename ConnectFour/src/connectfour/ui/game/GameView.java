@@ -4,6 +4,7 @@ import connectfour.logic.ConnectFourLogicChangeListener;
 import connectfour.model.Player;
 import connectfour.model.Stone;
 import connectfour.ui.util.CenterWindowUtil;
+import connectfour.ui.util.Icon;
 import connectfour.ui.util.JButtonCircle;
 import connectfour.ui.util.JLabelCircle;
 import java.awt.BorderLayout;
@@ -12,11 +13,16 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -65,7 +71,7 @@ public class GameView {
     
     private Player currentPlayer;
     
-    private Color backgroundColor = new Color(245, 245, 245);
+    private final Color backgroundColor = new Color(245, 245, 245);
 
     public GameView(Player player1, Player player2, int columns, int rows) {
         this.currentPlayer = player1;
@@ -110,6 +116,7 @@ public class GameView {
         frame = new JFrame("Connect 4 - Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setIconImages(Icon.getIconListGamepad());
     }
 
     private void createMenu() {
