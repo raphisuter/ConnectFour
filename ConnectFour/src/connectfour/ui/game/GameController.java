@@ -20,11 +20,14 @@ public class GameController {
     
     private final Player player2;
 
-    private final int columns = 7;
+    private final int columns;
+            
+    private final int rows;
     
-    private final int rows = 6;
-    
-    public GameController(Player startPlayer, Player otherPlayer) {
+    public GameController(Player startPlayer, Player otherPlayer, int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
+        
         this.player1 = startPlayer;
         this.player2 = otherPlayer;
         
