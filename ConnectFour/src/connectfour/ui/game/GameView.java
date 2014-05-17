@@ -1,14 +1,22 @@
 package connectfour.ui.game;
 
+import connectfour.logic.ConnectFourLogicChangeListener;
 import connectfour.model.Player;
+import connectfour.model.Stone;
 import connectfour.ui.util.CenterWindowUtil;
+import connectfour.ui.util.JLableCircle;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 /**
@@ -18,11 +26,25 @@ import javax.swing.border.Border;
  */
 public class GameView {
 
+    private ConnectFourLogicChangeListener listener;
+    
+    private final int columns;
+
+    private final int rows;
+    
     private JFrame frame;
+
+    private JMenuBar menuBar;
+
+    private JMenu menuGame;
+
+    private JMenuItem menuItemRestart;
+
+    private JMenuItem menuItemClose;
 
     private JButton[] columnButtons;
 
-    private JLabel[][] stoneLabels;
+    private JLableCircle[][] stoneLabels;
 
     private JLabel lblPlayer1Color;
 
@@ -32,23 +54,24 @@ public class GameView {
 
     private JLabel lblPlayer2Name;
 
-    private final int columns;
-
-    private final int rows;
-
     public GameView(Player player1, Player player2, int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
 
         createFrame();
+        createMenu();
         createButtons();
         createLabels(player1, player2);
-        createLayout();
         setupLayout();
     }
 
     public void show() {
         frame.setVisible(true);
+    }
+    
+    public void close() {
+        this.frame.setVisible(false);
+        this.frame.dispose();
     }
 
     public void addActionListenerToAllButtons(ActionListener listener) {
@@ -56,20 +79,47 @@ public class GameView {
             button.addActionListener(listener);
         }
     }
-
-    public void updateCurrentPlayer(Player player) {
-        Border borderCurrentPlayer = BorderFactory.createLineBorder(Color.BLACK, 3);
-        Border borderOtherPlayer = null;
-
-        if (this.lblPlayer1Color.getBackground().equals(player.getColor())) {
-            this.lblPlayer1Color.setBorder(borderCurrentPlayer);
-            this.lblPlayer2Color.setBorder(borderOtherPlayer);
-        } else {
-            this.lblPlayer2Color.setBorder(borderCurrentPlayer);
-            this.lblPlayer1Color.setBorder(borderOtherPlayer);
-        }
+    
+    public void addActionListenerClose(ActionListener listener) {
+        menuItemClose.addActionListener(listener);
     }
 
+    public void addActionListenerRestart(ActionListener listener) {
+        menuItemRestart.addActionListener(listener);
+    }
+
+    private void createFrame() {
+        int width = this.columns * 70;
+        int height = 125 + this.rows * 64;
+        
+        frame = new JFrame("Connect 4 - Game");
+        frame.setSize(width, height);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        CenterWindowUtil.center(frame);
+    }
+    
+    private void createMenu() {
+        menuBar = new JMenuBar();
+
+        menuGame = new JMenu("Game");
+
+        menuItemRestart = new JMenuItem("Neu starten");
+        menuItemClose = new JMenuItem("Beenden");
+
+        menuBar.add(menuGame);
+        menuGame.add(menuItemRestart);
+        menuGame.add(menuItemClose);
+    }
+    
+    private void createButtons() {
+        columnButtons = new JButton[columns];
+        for (int i = 0; i < columnButtons.length; i++) {
+            columnButtons[i] = new JButton();
+            columnButtons[i].setActionCommand(String.valueOf(i + 1));
+        }
+    }
+    
     private void createLabels(Player player1, Player player2) {
         this.lblPlayer1Name = new JLabel(player1.getName());
         this.lblPlayer2Name = new JLabel(player2.getName());
@@ -82,91 +132,107 @@ public class GameView {
         this.lblPlayer2Color.setBackground(player2.getColor());
         this.lblPlayer2Color.setOpaque(true);
 
-        stoneLabels = new JLabel[columns][rows];
-
+        stoneLabels = new JLableCircle[columns][rows];
         for (int c = 0; c < stoneLabels.length; c++) {
             for (int r = 0; r < stoneLabels[c].length; r++) {
-                stoneLabels[c][r] = new JLabel();
+                stoneLabels[c][r] = new JLableCircle();
                 stoneLabels[c][r].setBackground(Color.white);
                 stoneLabels[c][r].setOpaque(true);
             }
         }
     }
-
-    private void createFrame() {
-        frame = new JFrame("Connect 4 - Game");
-        frame.setSize(500, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        CenterWindowUtil.center(frame);
-    }
-
-    private void createButtons() {
-        columnButtons = new JButton[columns];
-
-        for (int i = 0; i < columnButtons.length; i++) {
-            columnButtons[i] = new JButton(String.valueOf(i + 1));
-        }
-
-    }
-
-    private void createLayout() {
-        frame.setLayout(null);
-    }
-
-    public void drawStone(int x, int y, Color color) {
-        stoneLabels[x - 1][y - 1].setBackground(color);
-    }
-
+    
     private void setupLayout() {
+        frame.setLayout(new BorderLayout());
+
+        frame.getContentPane().add(menuBar, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
         this.lblPlayer1Name.setBounds(30, 12, 100, 30);
-        frame.getContentPane().add(lblPlayer1Name);
+        panel.add(lblPlayer1Name);
 
         this.lblPlayer2Name.setBounds(30, 32, 100, 30);
-        frame.getContentPane().add(lblPlayer2Name);
+        panel.add(lblPlayer2Name);
 
         this.lblPlayer1Color.setBounds(10, 20, 15, 15);
-        frame.getContentPane().add(lblPlayer1Color);
+        panel.add(lblPlayer1Color);
 
         this.lblPlayer2Color.setBounds(10, 40, 15, 15);
-        frame.getContentPane().add(lblPlayer2Color);
+        panel.add(lblPlayer2Color);
 
         int i = 0;
         for (JButton button : this.columnButtons) {
             button.setBounds(10 + i * 70, 70, 45, 30);
-            frame.getContentPane().add(button);
+            panel.add(button);
             i++;
         }
 
         for (int c = 0; c < stoneLabels.length; c++) {
-            for (int r = 0; r < stoneLabels[c].length; r++) {
-                JLabel lbl = stoneLabels[c][r];
-                lbl.setBounds(10 + c * 70, 400 - r * 55, 45, 45);
-                frame.getContentPane().add(lbl);
+            for (int r = stoneLabels[c].length - 1; r >= 0; r--) {
+                
+               
+                int lastIndexOfRow = stoneLabels[c].length - 1;
+                int indexRowToTake = lastIndexOfRow - r;
+                
+                JLabel lbl = stoneLabels[c][indexRowToTake];
+                lbl.setBounds(10 + c * 70, 125 + r * 55, 45, 45);
+                panel.add(lbl);
             }
         }
-    }
 
-    public void deactivateAllColumns() {
-        for (JButton button : columnButtons) {
-            button.setEnabled(false);
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+    }
+    
+    private void updateCurrentPlayer(Player player) {
+        Border borderCurrentPlayer = BorderFactory.createLineBorder(Color.BLACK, 3);
+        Border borderOtherPlayer = null;
+
+        if (this.lblPlayer1Color.getBackground().equals(player.getColor())) {
+            this.lblPlayer1Color.setBorder(borderCurrentPlayer);
+            this.lblPlayer2Color.setBorder(borderOtherPlayer);
+        } else {
+            this.lblPlayer2Color.setBorder(borderCurrentPlayer);
+            this.lblPlayer1Color.setBorder(borderOtherPlayer);
         }
     }
 
-    public void deactivateColumn(int column) {
-        columnButtons[column].setEnabled(false);
-    }
-
-    public void activateColumn(int column) {
-        columnButtons[column].setEnabled(true);
-    }
-
-    public void showWinner(Player player) {
+    private void showWinner(Player player) {
         JOptionPane.showMessageDialog(this.frame, player.getName() + " hat gewonnen.");
     }
-    
-    public void close() {
-        this.frame.setVisible(false);
-        this.frame.dispose();
+
+    private void addStone(Stone stone) {
+        stoneLabels[stone.getColumn() - 1][stone.getRow() - 1].setBackground(stone.getPlayer().getColor());
     }
+
+    public ConnectFourLogicChangeListener getConnectFourLogicChangeListener() {
+        if (listener == null) {
+            listener = new ConnectFourLogicChangeListener() {
+
+                @Override
+                public void changedCurrentPlayer(Player changePlayer) {
+                    updateCurrentPlayer(changePlayer);
+                }
+
+                @Override
+                public void addedNewStone(Stone stone) {
+                    addStone(stone);
+                }
+                
+                @Override
+                public void notifyWinner(Player winner) {
+                    showWinner(winner);
+                    close();
+                }
+                
+                @Override
+                public void notifyColumnIsFull(int column) {
+                    int indexColumn = column - 1;
+                    columnButtons[indexColumn].setEnabled(false);
+                }
+            };
+        }
+        return listener;
+    }
+
 }

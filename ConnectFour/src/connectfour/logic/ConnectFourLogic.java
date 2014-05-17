@@ -64,4 +64,6 @@ public interface ConnectFourLogic {
      */
     int[] getAllNotFullColumns();
 
+    void addConnectFourChangeListener(ConnectFourLogicChangeListener listener);
+    
 }

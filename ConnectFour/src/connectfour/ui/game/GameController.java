@@ -17,57 +17,38 @@ public class GameController {
     private GameView view;
 
     public GameController(Player player1, Player player2) {
+
         // Modell und View erzeugen
-        this.model = new GameModel(player1, player2, 7, 6); // TODO Duplicated Code
-        this.view = new GameView(player1, player2, 7, 6); //  TODO Duplicated Code!
-        this.view.updateCurrentPlayer(this.model.getCurrentPlayer());
+        view = new GameView(player1, player2, 7, 6);
+        model = new GameModel(player1, player2, 7, 6);
+        model.addConnectFourLogicChangeListener(view.getConnectFourLogicChangeListener());
 
         // Agieren auf Kolonen Klicks
         this.view.addActionListenerToAllButtons(new ActionListener() {
+           
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // TODO Implementierung basiert auf dem Text des Buttons. Sollte geàndert werden.
+                // Kolone lesen
                 int column = Integer.valueOf(e.getActionCommand());
-
-                // Aktueller Spieler laden
-                Player currentPlayer = model.getCurrentPlayer();
 
                 // Stein werfen
                 model.throwStone(column);
+            }
+        });
 
-                // Laden der Position des geworfenen Steines
-                int lastColumn = model.getLastStoneColumn();
-                int lastRow = model.getLastStoneRow();
+        this.view.addActionListenerClose(new ActionListener() {
 
-                // View aktualisieren
-                view.drawStone(lastColumn, lastRow, currentPlayer.getColor());
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.close();
+            }
+        });
 
-                // Prüfen ob jemand gewonnen hat.
-                if (model.hasWon()) {
-                    view.showWinner(model.getWinner());
-                    view.close();
-                }
+        this.view.addActionListenerRestart(new ActionListener() {
 
-                // Nach dem Zug, wechselt der aktuelle Spieler
-                view.updateCurrentPlayer(model.getCurrentPlayer());
-                
-                // Warten auf Zug des anderen Spielers
-                view.deactivateAllColumns();
-                
-                // TODO Zug an Gegner senden
-                
-                // TODO Zug von Gegner erhalten
-
-                boolean enemyHasMakeAThrow = false;
-                while (!enemyHasMakeAThrow) {
-                    enemyHasMakeAThrow = true;
-                }
-
-                // Prüfen ob die Kolone noch Platz hat
-                for (int notFullColumn : model.getAllNotFullColumns()) {
-                    view.activateColumn(notFullColumn);
-                }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("restart");
             }
         });
     }

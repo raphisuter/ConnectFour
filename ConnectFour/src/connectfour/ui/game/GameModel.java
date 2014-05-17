@@ -1,6 +1,7 @@
 package connectfour.ui.game;
 
 import connectfour.logic.ConnectFourLogic;
+import connectfour.logic.ConnectFourLogicChangeListener;
 import connectfour.logic.DefaultConnectFourLogic;
 import connectfour.model.Player;
 
@@ -29,69 +30,12 @@ public class GameModel {
     }
 
     /**
-     * Gibt den aktuellen Spieler zurück.
+     * Fügt einen Modell-Listener hinzu.
      *
-     * @return Player Aktueller Spieler.
+     * @param listener ConnectFourLogicChangeListener
      */
-    public Player getCurrentPlayer() {
-        return logic.getCurrentPlayer();
-    }
-
-    /**
-     * Gibt den Index der Reihe zurück, in welcher der letzte Stein geworfen
-     * wurde.
-     *
-     * @return int Index der Reihe des letzten Steines.
-     */
-    public int getLastStoneRow() {
-        return logic.getLastRow();
-    }
-
-    /**
-     * Gibt den Index der Kolone zurück, in welcher der letzte Stein geworfen
-     * wurde.
-     *
-     * @return int Index der Kolone des letzten Steines.
-     */
-    public int getLastStoneColumn() {
-        return logic.getLastColumn();
-    }
-
-    /**
-     * Prüft ob die Kolone voll ist.
-     *
-     * @param column Index der Kolone
-     * @return True, falls die Kolone voll ist sonst false.
-     */
-    public boolean isColumnFull(int column) {
-        return logic.isColumnFull(column);
-    }
-
-    /**
-     * Gibt Indexe aller nicht vollen Kolonen zurück.
-     *
-     * @return int[] Indexe aller nicht vollen Kolonen.
-     */
-    public int[] getAllNotFullColumns() {
-        return logic.getAllNotFullColumns();
-    }
-
-    /**
-     * Prüft ob ein Spieler gewonnen hat.
-     *
-     * @return boolean True, falls jemand gewonnen hat, anderenfalls false.
-     */
-    public boolean hasWon() {
-        return logic.hasWon();
-    }
-
-    /**
-     * Gibt den Gewinner zurück.
-     *
-     * @return Player Gibt den Spieler zurück, welche das Spiel gewonnen hat.
-     */
-    public Player getWinner() {
-        return logic.getWinner();
+    public void addConnectFourLogicChangeListener(ConnectFourLogicChangeListener listener) {
+        logic.addConnectFourChangeListener(listener);
     }
 
 }

@@ -1,6 +1,9 @@
 package connectfour.logic;
 
 import connectfour.model.Player;
+import connectfour.model.Stone;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Random;
 
@@ -59,11 +62,35 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public void throwStone(int column) {
+        int indexColumn = column - 1;
+        int indexRow = -1;
+        
+        for (int r = 0; r < theArray[indexColumn].length; r++) {
+            if (theArray[indexColumn][r] == 0) {
+                indexRow = r;
+                break;
+            }
+        }
+        
         lastCol = column;
+        lastRow = indexRow + 1;
 
-        theArray[lastCol][lastRow] = 1; // TODO WORKING WITH ID OF PLAYER
+        theArray[indexColumn][indexRow] = getCurrentPlayer().getId(); // TODO WORKING WITH ID OF PLAYER
 
-        lastRow ++;
+        // Notifizieren, dass es einen neuen Stein gibt
+        Stone stone = new Stone(lastCol, lastRow, getCurrentPlayer());
+        firePropertyChangeNewStoneAdded(stone);
+        
+        // Prüfen ob eine Kolone voll ist, dann melde
+        int indexLastRowOfColumn = theArray[indexColumn].length - 1;
+        //System.out.println(theArray[indexColumn][indexLastRowOfColumn]);
+        if (theArray[indexColumn][indexLastRowOfColumn] != 0) {
+            firePropertyChangeColumnIsFull(lastCol);
+        }
+        
+        // Hier prüfen ob jemand gewonnen hat und falls ja Gewinner notifizieren
+        
+        // Hier notifizieren, weil der currentPlayer gewechselt hat
     }
 
     /**
@@ -82,6 +109,7 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     public void setWinner(Player winner) {
         this.winner = winner;
+        firePropertyChangeWinner(winner);
     }
 
     /**
@@ -178,6 +206,9 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
     @Override
     public Player getCurrentPlayer() {
         int zahl = (new Random()).nextInt(2);
+        
+        firePropertyChangeCurrentPlayer(player1);
+        
         return zahl == 1 ? player1 : player2;
     }
 
@@ -212,6 +243,39 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
             }
         }
         return notFullCols;
+    }
+
+    private List<ConnectFourLogicChangeListener> listeners = new ArrayList<>();
+    
+    @Override
+    public void addConnectFourChangeListener(ConnectFourLogicChangeListener listener) {
+        if (listener != null) {
+            listeners.add(listener);
+        }
+    }
+    
+    private void firePropertyChangeCurrentPlayer(Player player) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.changedCurrentPlayer(player);
+        }
+    }
+    
+    private void firePropertyChangeWinner(Player player) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.notifyWinner(player);
+        }
+    }
+    
+    private void firePropertyChangeColumnIsFull(int column) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.notifyColumnIsFull(column);
+        }
+    }
+    
+    private void firePropertyChangeNewStoneAdded(Stone stone) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.addedNewStone(stone);
+        }
     }
     
 }
