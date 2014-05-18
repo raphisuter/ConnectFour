@@ -15,61 +15,23 @@ public class GameController {
     private GameModel model;
 
     private GameView view;
+    
+    private final Player player1;
+    
+    private final Player player2;
 
-    public GameController(Player player1, Player player2) {
-        // Modell und View erzeugen
-        this.model = new GameModel(player1, player2, 7, 6); // TODO Duplicated Code
-        this.view = new GameView(player1, player2, 7, 6); //  TODO Duplicated Code!
-        this.view.updateCurrentPlayer(this.model.getCurrentPlayer());
-
-        // Agieren auf Kolonen Klicks
-        this.view.addActionListenerToAllButtons(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                // TODO Implementierung basiert auf dem Text des Buttons. Sollte geàndert werden.
-                int column = Integer.valueOf(e.getActionCommand());
-
-                // Aktueller Spieler laden
-                Player currentPlayer = model.getCurrentPlayer();
-
-                // Stein werfen
-                model.throwStone(column);
-
-                // Laden der Position des geworfenen Steines
-                int lastColumn = model.getLastStoneColumn();
-                int lastRow = model.getLastStoneRow();
-
-                // View aktualisieren
-                view.drawStone(lastColumn, lastRow, currentPlayer.getColor());
-
-                // Prüfen ob jemand gewonnen hat.
-                if (model.hasWon()) {
-                    view.showWinner(model.getWinner());
-                    view.close();
-                }
-
-                // Nach dem Zug, wechselt der aktuelle Spieler
-                view.updateCurrentPlayer(model.getCurrentPlayer());
-                
-                // Warten auf Zug des anderen Spielers
-                view.deactivateAllColumns();
-                
-                // TODO Zug an Gegner senden
-                
-                // TODO Zug von Gegner erhalten
-
-                boolean enemyHasMakeAThrow = false;
-                while (!enemyHasMakeAThrow) {
-                    enemyHasMakeAThrow = true;
-                }
-
-                // Prüfen ob die Kolone noch Platz hat
-                for (int notFullColumn : model.getAllNotFullColumns()) {
-                    view.activateColumn(notFullColumn);
-                }
-            }
-        });
+    private final int columns;
+            
+    private final int rows;
+    
+    public GameController(Player startPlayer, Player otherPlayer, int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
+        
+        this.player1 = startPlayer;
+        this.player2 = otherPlayer;
+        
+        setup();
     }
 
     /**
@@ -77,6 +39,54 @@ public class GameController {
      */
     public void showView() {
         this.view.show();
+    }
+    
+    private void setup() {
+        // Modell und View erzeugen
+        view = new GameView(player1, player2, columns, rows);
+        model = new GameModel(player1, player2, columns, rows);
+        model.addConnectFourLogicChangeListener(view.getConnectFourLogicChangeListener());
+
+        // Action Listener registrieren
+        view.addActionListenerToAllButtons(createActionListenerColumns());
+        view.addActionListenerClose(createActionListenerClose());
+        view.addActionListenerRestart(createActionListenerRestart());
+    }
+    
+    private ActionListener createActionListenerClose() {
+        return new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.close();
+            }
+        };
+    }
+    
+    private ActionListener createActionListenerRestart() {
+        return new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                view.close();
+                setup();
+                view.show();
+            }
+        };
+    }
+    
+    private ActionListener createActionListenerColumns() {
+        return new ActionListener() {
+           
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Kolone lesen
+                int column = Integer.valueOf(e.getActionCommand());
+
+                // Stein werfen
+                model.throwStone(column);
+            }
+        };
     }
 
 }

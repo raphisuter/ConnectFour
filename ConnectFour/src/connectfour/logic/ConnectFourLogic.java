@@ -64,4 +64,10 @@ public interface ConnectFourLogic {
      */
     int[] getAllNotFullColumns();
 
+    /**
+     * Fügt einen Connect Four Change Listener der Logik hinzu.
+     * @param listener Listener
+     */
+    void addConnectFourChangeListener(ConnectFourLogicChangeListener listener);
+    
 }

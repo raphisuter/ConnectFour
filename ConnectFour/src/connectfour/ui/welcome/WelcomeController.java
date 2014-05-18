@@ -30,7 +30,7 @@ public class WelcomeController {
                 Player player1 = Player.createPlayer1();
                 Player player2 = Player.createPlayer2();
                 
-                GameController controller = new GameController(player1, player2);
+                GameController controller = new GameController(player1, player2, 7, 6);
                 controller.showView();
             }
 
@@ -51,7 +51,7 @@ public class WelcomeController {
                     Player player1 = new Player(10, player, Color.MAGENTA);
                     Player player2 = Player.createPlayer2();
                     
-                    GameController controller = new GameController(player1, player2);
+                    GameController controller = new GameController(player1, player2, 7, 6);
                     controller.showView();
                 } else {
                    // view.showNoChoice();
@@ -75,7 +75,7 @@ public class WelcomeController {
                     Player player1 = new Player(10, player, Color.MAGENTA);
                     Player player2 = Player.createPlayer2();
                     
-                    GameController controller = new GameController(player1, player2);
+                    GameController controller = new GameController(player1, player2, 7, 6);
                     controller.showView();
                 } 
             }
