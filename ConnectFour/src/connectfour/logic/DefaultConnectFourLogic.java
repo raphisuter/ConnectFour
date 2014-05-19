@@ -1,14 +1,19 @@
 package connectfour.logic;
 
 import connectfour.model.Player;
+import connectfour.model.Stone;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Random;
+import java.util.Arrays;
 
 public class DefaultConnectFourLogic implements ConnectFourLogic {
 
     private Player player1;
     
     private Player player2;
+
+    private Player currentPlayer;
     
     private int maxCol;
     
@@ -16,9 +21,9 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
     
     private int[][] theArray;
 
-    private int lastRow = 0;
+    private int lastRow = 1;
 
-    private int lastCol = 0;
+    private int lastCol = 1;
 
     private Player winner = null;
 
@@ -38,6 +43,8 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
     public DefaultConnectFourLogic(Player player1, Player player2, int cols, int rows) {
         this.player1 = player1;
         this.player2 = player2;
+
+        this.currentPlayer = this.player1;
 
         this.maxCol = cols;
         this.maxRow = rows;
@@ -59,11 +66,35 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public void throwStone(int column) {
-        lastCol = column;
+        if (!isColumnFull(column)){
+            this.lastCol = column;
+            setLastRow();
+            theArray[lastCol-1][lastRow-1] = this.currentPlayer.getId();
 
-        theArray[lastCol][lastRow] = 1; // TODO WORKING WITH ID OF PLAYER
 
-        lastRow ++;
+            // Notifizieren, dass es einen neuen Stein gibt
+            Stone stone = new Stone(lastCol, lastRow, getCurrentPlayer());
+            firePropertyChangeNewStoneAdded(stone);
+
+            // Prüfen ob eine Kolone voll ist, dann melde
+            int indexLastRowOfColumn = theArray[lastCol-1].length - 1;
+            //System.out.println(theArray[indexColumn][indexLastRowOfColumn]);
+            if (theArray[lastCol-1][indexLastRowOfColumn] != 0) {
+                firePropertyChangeColumnIsFull(lastCol);
+            }
+
+            // Hier prüfen ob jemand gewonnen hat und falls ja Gewinner notifizieren
+               if (hasWon()){
+                   firePropertyChangeWinner(this.winner);
+               }
+
+            // Hier notifizieren, weil der currentPlayer gewechselt hat
+                switchPlayer();
+                firePropertyChangeCurrentPlayer(this.currentPlayer);
+
+        } else {
+            throw new RuntimeException("Diese Kolone ist voll!");
+        }
     }
 
     /**
@@ -77,14 +108,6 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
     }
 
     /**
-     * Müsste nicht public sein.
-     * @param winner 
-     */
-    public void setWinner(Player winner) {
-        this.winner = winner;
-    }
-
-    /**
      * Tip Top.
      * @return 
      */
@@ -95,10 +118,11 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
             for (int col=0; col<maxCol-3; col++) {
                 int curr = theArray[row][col];
                 if (curr>0
-                        && curr == theArray[row][col+1]
-                        && curr == theArray[row][col+2]
-                        && curr == theArray[row][col+3]) {
-                    setWinner(getCurrentPlayer());
+                        && curr == theArray[col+1][row]
+                        && curr == theArray[col+2][row]
+                        && curr == theArray[col+3][row]) {
+                    //switchPlayer();
+                    this.winner = getCurrentPlayer();
                     return true;
                 }
             }
@@ -106,12 +130,13 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
         // Vertikale Prüfung
         for (int col=0; col<maxCol; col++) {
             for (int row=0; row<maxRow-3; row++) {
-                int curr = theArray[row][col];
+                int curr = theArray[col][row];
                 if (curr>0
-                        && curr == theArray[row+1][col]
-                        && curr == theArray[row+2][col]
-                        && curr == theArray[row+3][col]) {
-                    setWinner(getCurrentPlayer());
+                        && curr == theArray[col][row+1]
+                        && curr == theArray[col][row+2]
+                        && curr == theArray[col][row+3]) {
+                    //switchPlayer();
+                    this.winner = getCurrentPlayer();
                     return true;
                 }
             }
@@ -119,12 +144,13 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
         // Diagonale unten links nach oben rechts
         for (int row=0; row<maxRow-3; row++) {
             for (int col=0; col<maxCol-3; col++) {
-                int curr = theArray[row][col];
+                int curr = theArray[col][row];
                 if (curr>0
-                        && curr == theArray[row+1][col+1]
-                        && curr == theArray[row+2][col+2]
-                        && curr == theArray[row+3][col+3]) {
-                    setWinner(getCurrentPlayer());
+                        && curr == theArray[col+1][row+1]
+                        && curr == theArray[col+2][row+2]
+                        && curr == theArray[col+3][row+3]) {
+                    //switchPlayer();
+                    this.winner = getCurrentPlayer();
                     return true;
                 }
             }
@@ -132,12 +158,13 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
         // Diagonale oben links nach unten rechts
         for (int row=maxRow-1; row>=3; row--) {
             for (int col=0; col<maxCol-3; col++) {
-                int curr = theArray[row][col];
+                int curr = theArray[col][row];
                 if (curr>0
-                        && curr == theArray[row-1][col+1]
-                        && curr == theArray[row-2][col+2]
-                        && curr == theArray[row-3][col+3]) {
-                    setWinner(getCurrentPlayer());
+                        && curr == theArray[col+1][row-1]
+                        && curr == theArray[col+2][row-2]
+                        && curr == theArray[col+3][row-3]) {
+                    //switchPlayer();
+                    this.winner = getCurrentPlayer();
                     return true;
                 }
             }
@@ -155,7 +182,7 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public int getLastColumn() {
-        return lastCol;
+        return this.lastCol;
     }
 
     /**
@@ -167,7 +194,16 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public int getLastRow() {
-        return lastRow;
+        return this.lastRow;
+    }
+
+    private void setLastRow(){
+        for (int row=1; row<maxRow+1; row++) {
+            if (!(this.theArray[this.lastCol-1][row-1]>0)){
+                this.lastRow = row;
+                break;
+            }
+        }
     }
 
     /**
@@ -177,8 +213,15 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public Player getCurrentPlayer() {
-        int zahl = (new Random()).nextInt(2);
-        return zahl == 1 ? player1 : player2;
+        return this.currentPlayer;
+    }
+
+    private void switchPlayer(){
+        if (getCurrentPlayer() == player1){
+            this.currentPlayer = player2;
+        } else {
+            this.currentPlayer = player1;
+        }
     }
 
     /**
@@ -189,11 +232,12 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
      */
     @Override
     public boolean isColumnFull(int column) {
-       if (lastCol == maxCol) {
-           return true;
-       } else {
-           return false;
-       }
+        for (int row=0; row<maxRow; row++) {
+            if (!(this.theArray[column-1][row]>0)){
+                return false;
+            }
+        }
+        return true;
     }
     
     /**
@@ -205,13 +249,45 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
     @Override
     public int[] getAllNotFullColumns() {
         int i = 0;
-        for (int col=0; col<maxCol; col++) {
+        for (int col=1; col<maxCol+1; col++) {
             if(!isColumnFull(col)){
-                notFullCols[i] = col;
+                notFullCols[i] = col-1;
                 i++;
             }
         }
-        return notFullCols;
+        return Arrays.copyOf(notFullCols, i);
     }
-    
+
+    private List<ConnectFourLogicChangeListener> listeners = new ArrayList<>();
+
+    @Override
+    public void addConnectFourChangeListener(ConnectFourLogicChangeListener listener) {
+        if (listener != null) {
+            listeners.add(listener);
+        }
+    }
+
+    private void firePropertyChangeCurrentPlayer(Player player) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.changedCurrentPlayer(player);
+        }
+    }
+
+    private void firePropertyChangeWinner(Player player) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.notifyWinner(player);
+        }
+    }
+
+    private void firePropertyChangeColumnIsFull(int column) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.notifyColumnIsFull(column);
+        }
+    }
+
+    private void firePropertyChangeNewStoneAdded(Stone stone) {
+        for (ConnectFourLogicChangeListener listener : listeners) {
+            listener.addedNewStone(stone);
+        }
+    }
 }
