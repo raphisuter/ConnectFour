@@ -11,7 +11,7 @@ public class PlayerTest {
 
     @Before
     public void setUp() {
-        testee = new Player(4, "Ingold", Color.GRAY);
+        testee = new LocalPlayer(4, "Ingold", Color.GRAY);
     }
 
     @Test
