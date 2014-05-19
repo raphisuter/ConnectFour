@@ -1,6 +1,8 @@
 package connectfour.ui.game;
 
+import connectfour.model.LocalPlayer;
 import connectfour.model.Player;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,10 +18,12 @@ public class GameController {
 
     private GameView view;
     
-    private final Player player1;
+    private final Player startPlayer;
     
-    private final Player player2;
+    private final Player otherPlayer;
 
+    private final Player enemyPlayer;
+    
     private final int columns;
             
     private final int rows;
@@ -28,8 +32,14 @@ public class GameController {
         this.columns = columns;
         this.rows = rows;
         
-        this.player1 = startPlayer;
-        this.player2 = otherPlayer;
+        this.startPlayer = startPlayer;
+        this.otherPlayer = otherPlayer;
+        
+        if (startPlayer instanceof LocalPlayer) {
+        	enemyPlayer = otherPlayer;
+        } else {
+        	enemyPlayer = startPlayer;
+        }
         
         setup();
     }
@@ -39,12 +49,14 @@ public class GameController {
      */
     public void showView() {
         this.view.show();
+        
+        this.start();
     }
     
     private void setup() {
         // Modell und View erzeugen
-        view = new GameView(player1, player2, columns, rows);
-        model = new GameModel(player1, player2, columns, rows);
+        view = new GameView(startPlayer, otherPlayer, columns, rows);
+        model = new GameModel(startPlayer, otherPlayer, columns, rows);
         model.addConnectFourLogicChangeListener(view.getConnectFourLogicChangeListener());
 
         // Action Listener registrieren
@@ -85,8 +97,46 @@ public class GameController {
 
                 // Stein werfen
                 model.throwStone(column);
+                
+                // UI deaktivieren
+                view.deactivateColumns();
+                
+                // Nun muss ich dem Gegner den Zug zuschicken
+                enemyPlayer.sendThrow(column);
+
+                // Nun muss ich auf den Zug warten
+                int enemyColumn = enemyPlayer.getNextThrow();
+                
+                // Auf dem Modell setzen
+                model.throwStone(enemyColumn);
+                
+                // UI wieder aktivieren
+                view.activateColumns();
+                
             }
         };
     }
+    
+    private void start() {
+    	if (startPlayer instanceof LocalPlayer) {
+    		// Nothing To Do.
+    		
+    	} else {
+    		// Der andere Spieler startet mit dem Spiel.
+    		
+    		// UI Deaktivieren
+    		view.deactivateColumns();
+    		
+    		// Kolone von Gegner erhalten
+    		int column = otherPlayer.getNextThrow();
+    		
+    		// Kolone setzen
+    		model.throwStone(column);
+    		
+    		// UI Aktivieren
+    		view.activateColumns();
+    	}
+    }
+    
 
 }

@@ -6,7 +6,7 @@ import java.awt.Color;
  *
  * @author Alex
  */
-public class Player {
+public abstract class Player {
     
     private int id;
     
@@ -44,12 +44,16 @@ public class Player {
         return color;
     }
     
-    public static Player createPlayer1() {
-        return new Player(1, "Spieler 1", Color.red);
+    public static Player createLocalPlayer() {
+        return new LocalPlayer(1, "Lokaler Spieler", Color.red);
     }
     
-    public static Player createPlayer2() {
-        return new Player(2, "Spieler 2", Color.yellow);
+    public static Player createComputerPlayer() {
+        return new ComputerPlayer(2, "Computer", Color.yellow);
     }
+    
+    public abstract void sendThrow(int column);
+    
+    public abstract int getNextThrow();
     
 }

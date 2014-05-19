@@ -7,6 +7,7 @@ import connectfour.ui.util.CenterWindowUtil;
 import connectfour.ui.util.Icon;
 import connectfour.ui.util.JButtonCircle;
 import connectfour.ui.util.JLabelCircle;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +15,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -263,6 +266,18 @@ public class GameView {
 
     private void addStone(Stone stone) {
         stoneLabels[stone.getColumn() - 1][stone.getRow() - 1].setBackground(stone.getPlayer().getColor());
+    }
+    
+    public void deactivateColumns() {
+    	for (JButton button : this.columnButtons) {
+    		button.setEnabled(false);
+    	}
+    }
+    
+    public void activateColumns() {
+    	for (JButton button : this.columnButtons) {
+    		button.setEnabled(true);
+    	}
     }
 
     public ConnectFourLogicChangeListener getConnectFourLogicChangeListener() {

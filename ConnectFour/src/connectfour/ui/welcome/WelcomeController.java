@@ -27,8 +27,8 @@ public class WelcomeController {
                 model.setPlayHuman(false);
                 view.close();
 
-                Player player1 = Player.createPlayer1();
-                Player player2 = Player.createPlayer2();
+                Player player1 = Player.createLocalPlayer();
+                Player player2 = Player.createComputerPlayer();
                 
                 GameController controller = new GameController(player1, player2, 7, 6);
                 controller.showView();
@@ -48,8 +48,8 @@ public class WelcomeController {
 
                     view.close();
 
-                    Player player1 = new Player(10, player, Color.MAGENTA);
-                    Player player2 = Player.createPlayer2();
+                    Player player1 = Player.createLocalPlayer();
+                    Player player2 = Player.createComputerPlayer();
                     
                     GameController controller = new GameController(player1, player2, 7, 6);
                     controller.showView();
@@ -72,8 +72,8 @@ public class WelcomeController {
 
                     view.close();
 
-                    Player player1 = new Player(10, player, Color.MAGENTA);
-                    Player player2 = Player.createPlayer2();
+                    Player player1 = Player.createLocalPlayer();
+                    Player player2 = Player.createComputerPlayer();
                     
                     GameController controller = new GameController(player1, player2, 7, 6);
                     controller.showView();
