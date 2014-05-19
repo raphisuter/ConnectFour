@@ -1,6 +1,8 @@
 package connectfour.ui.welcome;
 
 import connectfour.model.Player;
+import connectfour.networking.UDPServer;
+import connectfour.networking.UDPClient;
 import connectfour.ui.game.GameController;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -39,23 +41,10 @@ public class WelcomeController {
         this.view.addActionListenerMultiPlayerOpen(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                String player = "Testperson";
-                if (player != null) {
-                    System.out.println(player);
-                    model.setPlayComputer(false);
-                    model.setPlayHuman(true);
-
-                    view.close();
-
-                    Player player1 = Player.createLocalPlayer();
-                    Player player2 = Player.createComputerPlayer();
-                    
-                    GameController controller = new GameController(player1, player2, 7, 6);
-                    controller.showView();
-                } else {
-                   // view.showNoChoice();
-                }
+                
+                //Test Raphael - nicht löschen
+                UDPServer uServer = new UDPServer(20);
+                uServer.start();
             }
 
         });
@@ -64,25 +53,13 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String player = "Testperson";
-                if (player != null) {
-                    System.out.println(player);
-                    model.setPlayComputer(false);
-                    model.setPlayHuman(true);
-
-                    view.close();
-
-                    Player player1 = Player.createLocalPlayer();
-                    Player player2 = Player.createComputerPlayer();
-                    
-                    GameController controller = new GameController(player1, player2, 7, 6);
-                    controller.showView();
-                } 
+                //Test Raphael - nicht löschen
+                UDPClient uClient = new UDPClient();
+                uClient.start();
             }
 
         });
 
-       
     }
 
     public void showView() {
