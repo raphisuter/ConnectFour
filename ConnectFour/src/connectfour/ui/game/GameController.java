@@ -17,30 +17,30 @@ public class GameController {
     private GameModel model;
 
     private GameView view;
-    
+
     private final Player startPlayer;
-    
+
     private final Player otherPlayer;
 
     private final Player enemyPlayer;
-    
+
     private final int columns;
-            
+
     private final int rows;
-    
+
     public GameController(Player startPlayer, Player otherPlayer, int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
-        
+
         this.startPlayer = startPlayer;
         this.otherPlayer = otherPlayer;
-        
+
         if (startPlayer instanceof LocalPlayer) {
-        	enemyPlayer = otherPlayer;
+            enemyPlayer = otherPlayer;
         } else {
-        	enemyPlayer = startPlayer;
+            enemyPlayer = startPlayer;
         }
-        
+
         setup();
     }
 
@@ -49,10 +49,10 @@ public class GameController {
      */
     public void showView() {
         this.view.show();
-        
+
         this.start();
     }
-    
+
     private void setup() {
         // Modell und View erzeugen
         view = new GameView(startPlayer, otherPlayer, columns, rows);
@@ -64,7 +64,7 @@ public class GameController {
         view.addActionListenerClose(createActionListenerClose());
         view.addActionListenerRestart(createActionListenerRestart());
     }
-    
+
     private ActionListener createActionListenerClose() {
         return new ActionListener() {
 
@@ -74,7 +74,7 @@ public class GameController {
             }
         };
     }
-    
+
     private ActionListener createActionListenerRestart() {
         return new ActionListener() {
 
@@ -86,10 +86,10 @@ public class GameController {
             }
         };
     }
-    
+
     private ActionListener createActionListenerColumns() {
         return new ActionListener() {
-           
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Kolone lesen
@@ -97,46 +97,37 @@ public class GameController {
 
                 // Stein werfen
                 model.throwStone(column);
-                
-                // UI deaktivieren
-                view.deactivateColumns();
-                
+
                 // Nun muss ich dem Gegner den Zug zuschicken
                 enemyPlayer.sendThrow(column);
 
-                // Nun muss ich auf den Zug warten
-                int enemyColumn = enemyPlayer.getNextThrow();
-                
-                // Auf dem Modell setzen
-                model.throwStone(enemyColumn);
-                
-                // UI wieder aktivieren
-                view.activateColumns();
-                
+                // Nun die Sache mit dem Enemey
+                enemey();
+
             }
         };
     }
-    
+
     private void start() {
-    	if (startPlayer instanceof LocalPlayer) {
-    		// Nothing To Do.
-    		
-    	} else {
-    		// Der andere Spieler startet mit dem Spiel.
-    		
-    		// UI Deaktivieren
-    		view.deactivateColumns();
-    		
-    		// Kolone von Gegner erhalten
-    		int column = otherPlayer.getNextThrow();
-    		
-    		// Kolone setzen
-    		model.throwStone(column);
-    		
-    		// UI Aktivieren
-    		view.activateColumns();
-    	}
+        if (!(startPlayer instanceof LocalPlayer)) {
+            enemey();
+        }   
     }
-    
+
+    private void enemey() {
+        // UI deaktivieren
+        view.deactivateColumns();
+
+        if (!model.hasWon()) {
+            // Nun muss ich auf den Zug warten
+            int enemyColumn = enemyPlayer.getNextThrow();
+
+            // Auf dem Modell setzen
+            model.throwStone(enemyColumn);
+
+            //  UI wieder aktivieren
+            view.activateColumns();
+        }
+    }
 
 }

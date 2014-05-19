@@ -37,5 +37,9 @@ public class GameModel {
     public void addConnectFourLogicChangeListener(ConnectFourLogicChangeListener listener) {
         logic.addConnectFourChangeListener(listener);
     }
+    
+    public boolean hasWon() {
+        return logic.hasWon();
+    }
 
 }
