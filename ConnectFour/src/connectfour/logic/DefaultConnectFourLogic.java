@@ -116,7 +116,7 @@ public class DefaultConnectFourLogic implements ConnectFourLogic {
         // Horizontale Prüfung
         for (int row=0; row<maxRow; row++) {
             for (int col=0; col<maxCol-3; col++) {
-                int curr = theArray[row][col];
+                int curr = theArray[col][row];
                 if (curr>0
                         && curr == theArray[col+1][row]
                         && curr == theArray[col+2][row]
