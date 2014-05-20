@@ -1,17 +1,25 @@
 package connectfour.model;
 
+import connectfour.networking.TCPCommunicator;
 import java.awt.Color;
+import java.net.InetAddress;
 
+/**
+ *
+ * @author Suter Raphael <raphael.suter@stud.hslu.ch>
+ */
 public class NetworkPlayer extends Player {
-
-	public NetworkPlayer(int id, String name, Color color) {
+        
+        private TCPCommunicator comm;
+        
+	public NetworkPlayer(int id, String name, Color color, String ipAddress) {
 		super(id, name, color);
-		// TODO Auto-generated constructor stub
+                //IP-Adresse in Networkplayer ablegen
+                this.comm = new TCPCommunicator(ipAddress);
 	}
 
 	@Override
 	public void sendThrow(int column) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -20,5 +28,5 @@ public class NetworkPlayer extends Player {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+        
 }

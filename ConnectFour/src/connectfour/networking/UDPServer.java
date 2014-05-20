@@ -23,7 +23,8 @@ public class UDPServer extends Thread{
     boolean hasOponent = false;
     
     public UDPServer(int maxAttemps) {
-        this.maxAttemps = maxAttemps;
+        //this.maxAttemps = maxAttemps;
+        this.maxAttemps = 5000;
     }
     
     @Override
@@ -37,7 +38,7 @@ public class UDPServer extends Thread{
                 String broadcast = "255.255.255.255";
                 InetAddress address = InetAddress.getByName(broadcast);
                 byte[] raw = new byte[1000];
-                raw = NetworkHelper.SEARCH_SERVER.getBytes();
+                raw = (NetworkHelper.SEARCH_SERVER + "; " + System.getProperty("user.name")).getBytes();
                 DatagramPacket packet = new DatagramPacket(raw, raw.length, address, 12345);
                 socket.send(packet);
                 countOfAttemps++;
