@@ -66,7 +66,7 @@ public class WelcomeController {
                 // Auf IP Adresse meines gegenüber warten
                 UDPGetIp udpGetIp = new UDPGetIp();
                 String ip = udpGetIp.getIp();
-                
+                System.out.println("IP erhalten! --- " + ip);
                 // View ausblenden
                 view.close();
                 

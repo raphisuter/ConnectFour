@@ -19,16 +19,18 @@ public class UDPPlay extends Thread{
     private String ipAddress;
     
     public UDPPlay(String ipAddress){
-        this.ipAddress = ipAddress;
+        String[] stringArray = ipAddress.split("/");
+        
+        this.ipAddress = stringArray[1];
     }
     
     @Override
     public void run(){
         System.out.println("UDP-Connect");
         int i = 0;
-        while(i <= 5){
+        while(i <= 2){
             try(DatagramSocket socket = new DatagramSocket()){
-                Thread.sleep(1000);
+                Thread.sleep(500);
                 InetAddress address = InetAddress.getByName(ipAddress);
                 byte[] raw = new byte[1000];
                 raw = NetworkHelper.CONNECT_TO_SERVER.getBytes();
@@ -38,6 +40,7 @@ public class UDPPlay extends Thread{
                 i++;
             }catch(Exception e){
                 System.err.println("Error: "+ e.getMessage());
+                i++;
             }
         }
     }
