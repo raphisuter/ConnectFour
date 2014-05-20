@@ -7,6 +7,7 @@
 package connectfour.networking;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -17,12 +18,12 @@ public class TCPCommunicator {
     private InetAddress opponentAddr;
     
     public TCPCommunicator(String ipAddressOponent) {
+        String[] stringArray = ipAddressOponent.split("/");
         try{
-            opponentAddr = InetAddress.getByName(ipAddressOponent);
-        }catch(Exception e){
+            opponentAddr = InetAddress.getByName(stringArray[1]);
+        }catch(UnknownHostException e){
             e.printStackTrace();
-        }
-        
+        }   
     }
     
     public void sendThrow(int column){
@@ -32,4 +33,12 @@ public class TCPCommunicator {
     public int receiveThrow(){
         return 0;
     }
+
+    public InetAddress getOpponentAddr() {
+        return opponentAddr;
+    }
+
+    public void setOpponentAddr(InetAddress opponentAddr) {
+        this.opponentAddr = opponentAddr;
+    }       
 }
