@@ -39,7 +39,7 @@ public class UDPServer extends Thread{
                 InetAddress address = InetAddress.getByName(broadcast);
                 byte[] raw = new byte[1000];
                 raw = (NetworkHelper.SEARCH_SERVER + "; " + System.getProperty("user.name")).getBytes();
-                DatagramPacket packet = new DatagramPacket(raw, raw.length, address, 12345);
+                DatagramPacket packet = new DatagramPacket(raw, raw.length, address, NetworkHelper.Port);
                 socket.send(packet);
                 countOfAttemps++;
                 //Sende alle 2 Sekunden eine Broadcast Meldung

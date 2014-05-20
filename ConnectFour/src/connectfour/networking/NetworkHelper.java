@@ -13,4 +13,5 @@ package connectfour.networking;
 public abstract class NetworkHelper {
     public static final String SEARCH_SERVER = "Are you a connect4 open server?";
     public static final String CONNECT_TO_SERVER = "I want to play a game";
+    public static final int Port = 12345;
 }

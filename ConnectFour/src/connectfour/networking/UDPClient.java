@@ -31,7 +31,7 @@ public class UDPClient extends Thread{
     
     @Override
     public void run(){
-        try(DatagramSocket socket = new DatagramSocket(12345)){
+        try(DatagramSocket socket = new DatagramSocket(NetworkHelper.Port)){
             byte[] buf = new byte[1000];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             
