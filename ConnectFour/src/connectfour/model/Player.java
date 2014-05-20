@@ -1,5 +1,6 @@
 package connectfour.model;
 
+import connectfour.ui.welcome.WelcomeView;
 import java.awt.Color;
 
 /**
@@ -50,8 +51,8 @@ public abstract class Player {
         return new LocalPlayer(1, "Lokaler Spieler", Color.red);
     }
     
-    public static Player createComputerPlayer() {
-        return new ComputerPlayer(2, "Computer", Color.yellow);
+      public static Player createComputerPlayer(WelcomeView welcomeView) {
+        return new ComputerPlayer(2, "Computer", Color.yellow, welcomeView);
     }
 
     public boolean isFirstMove() {
@@ -67,3 +68,4 @@ public abstract class Player {
     public abstract int getNextThrow();
     
 }
+
