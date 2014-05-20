@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class LocalPlayer extends Player {
 
-	public LocalPlayer(int id, String name, Color color) {
+	LocalPlayer(int id, String name, Color color) {
 		super(id, name, color);
 	}
 
