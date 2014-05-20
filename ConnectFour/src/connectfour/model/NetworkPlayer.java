@@ -20,13 +20,13 @@ public class NetworkPlayer extends Player {
 
 	@Override
 	public void sendThrow(int column) {
-		
+		comm.sendThrow(column);
 	}
 
 	@Override
 	public int getNextThrow() {
-		// TODO Auto-generated method stub
-		return 0;
+		int i = comm.receiveThrow();
+		return i;
 	}
         
 }

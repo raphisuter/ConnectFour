@@ -13,6 +13,8 @@ public abstract class Player {
     private String name;
     
     private Color color;
+    
+    private boolean firstMove;
 
     public Player(int id, String name, Color color) {
         this.id = id;
@@ -50,6 +52,14 @@ public abstract class Player {
     
     public static Player createComputerPlayer() {
         return new ComputerPlayer(2, "Computer", Color.yellow);
+    }
+
+    public boolean isFirstMove() {
+        return firstMove;
+    }
+
+    public void setFirstMove(boolean firstMove) {
+        this.firstMove = firstMove;
     }
     
     public abstract void sendThrow(int column);

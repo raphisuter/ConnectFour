@@ -29,7 +29,7 @@ public class TCPCommunicator {
         
     }
     
-    public void receiveThrow(){
-        
+    public int receiveThrow(){
+        return 0;
     }
 }
