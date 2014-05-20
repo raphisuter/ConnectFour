@@ -1,5 +1,6 @@
 package connectfour.model;
 
+import connectfour.ki.KIMedium;
 import connectfour.ui.welcome.WelcomeView;
 import java.awt.Color;
 
@@ -51,8 +52,8 @@ public abstract class Player {
         return new LocalPlayer(1, "Lokaler Spieler", Color.red);
     }
     
-      public static Player createComputerPlayer(WelcomeView welcomeView) {
-        return new ComputerPlayer(2, "Computer", Color.yellow, welcomeView);
+      public static Player createComputerPlayer(int cols, int rows) {
+        return new ComputerPlayer(2, "Computer", Color.yellow, cols, rows, new KIMedium());
     }
 
     public boolean isFirstMove() {

@@ -36,7 +36,7 @@ public class WelcomeController {
                     
                     // Spieler erzeugen
                     Player startPlayer = Player.createLocalPlayer();
-                    Player otherPlayer = Player.createComputerPlayer(view);
+                    Player otherPlayer = Player.createComputerPlayer(model.getNumberOfColumns(), model.getNumberOfRows());
 
                     // Game starten
                     GameController controller = new GameController(startPlayer, otherPlayer, model.getNumberOfColumns(), model.getNumberOfRows());

@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class WelcomeView {
 
-    private final String FRAME_TITLE = "Connect 4 - Welcome";
+    private final String FRAME_TITLE = "Connect 4 - Willkommen";
     private final String BUTTON_SINGLE_PLAYER = "Gegen den Computer";
     private final String BUTTON_MULTI_PLAYERopen = "Spiel eröffnen";
     private final String BUTTON_MULTI_PLAYERjoin = "Spiel beitreten";
@@ -25,8 +25,8 @@ public class WelcomeView {
     private JLabel textLabel4;
     private JSlider sliderRows;
     private JSlider sliderColumns;
-    private final String LABEL_TEXT1 = "Single-Player";
-    private final String LABEL_TEXT2 = "Multi-Player";
+    private final String LABEL_TEXT1 = "Einzelspieler";
+    private final String LABEL_TEXT2 = "Mehrspieler";
     private final String LABEL_TEXT3 = "Anzahl Reihen";
     private final String LABEL_TEXT4 = "Anzahl Spalten";
     private JButton singlePlayerButton;
@@ -60,7 +60,7 @@ public class WelcomeView {
 
     private void createFrame() {
         frame = new JFrame(FRAME_TITLE);
-        frame.setSize(620, 250);
+        frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CenterWindowUtil.center(frame);
         frame.setResizable(false);
@@ -73,19 +73,24 @@ public class WelcomeView {
 
     private void setupLayout() {
 
-        textLabel1.setBounds(85, 30, 200, 30);
-        textLabel2.setBounds(390, 30, 200, 30);
-        textLabel3.setBounds(40, 110, 200, 30);
-        textLabel4.setBounds(40, 150, 200, 30);
+        // Einzelspieler
+        textLabel1.setBounds(40, 30, 100, 30);
+        
+        textLabel3.setBounds(40, 70, 100, 30);
+        textLabel4.setBounds(40, 120, 100, 30);
+        
+        sliderColumns.setBounds(150, 75, 400, 50);
+        sliderRows.setBounds(150, 125, 400, 50);
+        
+        singlePlayerButton.setBounds(40, 190, 510, 30);
+        
+        // Mehrspieler
+        textLabel2.setBounds(40, 230, 100, 30);
+        
+        multiPlayerButtonOpen.setBounds(40, 270, 510, 30);
+        multiPlayerButtonJoin.setBounds(40, 310, 510, 30);
 
-        singlePlayerButton.setBounds(40, 70, 170, 30);
-
-        multiPlayerButtonOpen.setBounds(270, 70, 150, 30);
-        multiPlayerButtonJoin.setBounds(430, 70, 150, 30);
-
-        sliderRows.setBounds(140, 110, 450, 30);
-        sliderColumns.setBounds(140, 150, 450, 30);
-
+        // Komponenten hinzufügen
         frame.getContentPane().add(textLabel1);
         frame.getContentPane().add(textLabel2);
         frame.getContentPane().add(textLabel3);
@@ -122,11 +127,14 @@ public class WelcomeView {
     private void createFieldSizeSliders() {
         sliderRows = new JSlider(JSlider.HORIZONTAL, 4, 20, 6);
         sliderColumns = new JSlider(JSlider.HORIZONTAL, 4, 20, 7);
+        
         sliderRows.setMinorTickSpacing(1);
         sliderRows.setMajorTickSpacing(1);
         sliderRows.setPaintTicks(true);
         sliderRows.setPaintLabels(true);
+        
         sliderColumns.setMinorTickSpacing(1);
+        sliderColumns.setMajorTickSpacing(1);
         sliderColumns.setPaintTicks(true);
         sliderColumns.setPaintLabels(true);
     }
@@ -141,10 +149,6 @@ public class WelcomeView {
 
     public void addActionListenerMultiPlayerJoin(ActionListener Listener) {
         multiPlayerButtonJoin.addActionListener(Listener);
-    }
-
-    public void showParseException() {
-        JOptionPane.showMessageDialog(frame, "Ungültige Eingabe");
     }
 
     public int getRows() {
