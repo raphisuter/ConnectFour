@@ -25,17 +25,16 @@ public class UDPPlay extends Thread{
     
     @Override
     public void run(){
-        System.out.println("UDP-Connect");
+        System.out.println("UDP-Connect an Server senden");
         int i = 0;
         while(i <= 2){
             try(DatagramSocket socket = new DatagramSocket()){
-                Thread.sleep(500);
+                Thread.sleep(300);
                 InetAddress address = InetAddress.getByName(ipAddress);
                 byte[] raw = new byte[1000];
                 raw = NetworkHelper.CONNECT_TO_SERVER.getBytes();
                 DatagramPacket packet = new DatagramPacket(raw, raw.length, address, NetworkHelper.Port);
                 socket.send(packet);
-                System.out.println("Connect gesendet");
                 i++;
             }catch(Exception e){
                 System.err.println("Error: "+ e.getMessage());
