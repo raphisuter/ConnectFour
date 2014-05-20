@@ -66,7 +66,7 @@ public class WelcomeController {
                 // Auf IP Adresse meines gegenüber warten
                 UDPGetIp udpGetIp = new UDPGetIp();
                 String ip = udpGetIp.getIp();
-                System.out.println("Gegner gefunden und seine IP erhalten! --- " + ip);
+                System.out.println("Gegner verbindet sich - " + ip);
                 
                 // UDP Server stoppen
                 uServer.setStoppThread(true);
