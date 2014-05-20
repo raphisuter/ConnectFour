@@ -1,8 +1,9 @@
 package connectfour.ui.welcome;
 
+import connectfour.ki.KI;
 import connectfour.model.DefaultConfiguration;
-import connectfour.model.NetworkPlayer;
 import connectfour.model.Player;
+import connectfour.model.RandomStarter;
 import connectfour.networking.UDPServer;
 import connectfour.networking.UDPClient;
 import connectfour.networking.UPDGetIp;
@@ -10,6 +11,7 @@ import connectfour.ui.game.GameController;
 import connectfour.ui.searchServer.SearchServerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 /**
  *
@@ -34,15 +36,20 @@ public class WelcomeController {
                     model.setPlayComputer(true);
                     model.setPlayHuman(false);
                     
+                    KI ki = view.getStrength();
+                    
                     // View schliessen
                     view.close();
                     
                     // Spieler erzeugen
                     Player startPlayer = Player.createLocalPlayer();
-                    Player otherPlayer = Player.createComputerPlayer(model.getNumberOfColumns(), model.getNumberOfRows());
+                    Player otherPlayer = Player.createComputerPlayer(ki, model.getNumberOfColumns(), model.getNumberOfRows());
 
+                    // Random wer anfängt im Single Player Mode.
+                    RandomStarter starter = new RandomStarter(startPlayer, otherPlayer);
+                    
                     // Game starten
-                    GameController controller = new GameController(startPlayer, otherPlayer, model.getNumberOfColumns(), model.getNumberOfRows());
+                    GameController controller = new GameController(starter.getFirstPlayer(), starter.getSecondPlayer(), model.getNumberOfColumns(), model.getNumberOfRows());
                     controller.showView();
             }
         });

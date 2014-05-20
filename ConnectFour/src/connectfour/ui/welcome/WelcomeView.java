@@ -1,11 +1,16 @@
 package connectfour.ui.welcome;
 
+import connectfour.ki.KI;
+import connectfour.ki.KIMedium;
+import connectfour.ki.KISimple;
 import connectfour.model.DefaultConfiguration;
 import connectfour.ui.util.CenterWindowUtil;
 import connectfour.ui.util.Icon;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Welcome Frame stellt das erste Frame in der Applikation dar. In diesem GUI
@@ -84,7 +89,8 @@ public class WelcomeView {
         sliderColumns.setBounds(150, 75, 400, 50);
         sliderRows.setBounds(150, 125, 400, 50);
         
-        singlePlayerButton.setBounds(40, 190, 510, 30);
+        strength.setBounds(40, 190, 80, 30);
+        singlePlayerButton.setBounds(130, 190, 420, 30);
         
         // Mehrspieler
         textLabel2.setBounds(40, 230, 100, 30);
@@ -97,7 +103,7 @@ public class WelcomeView {
         frame.getContentPane().add(textLabel2);
         frame.getContentPane().add(textLabel3);
         frame.getContentPane().add(textLabel4);
-
+        frame.getContentPane().add(strength);
         frame.getContentPane().add(singlePlayerButton);
         frame.getContentPane().add(multiPlayerButtonOpen);
         frame.getContentPane().add(multiPlayerButtonJoin);
@@ -132,7 +138,11 @@ public class WelcomeView {
     }
     
     private void createStrength() {
-        //strength = new JComboBox<>({"Schwach", "Mittel"});
+        List<Object> str = new ArrayList<>();
+        str.add(new KISimple());
+        str.add(new KIMedium());
+        
+        strength = new JComboBox(str.toArray());
     }
 
     private JSlider createSlider(int defaultValue) {
@@ -164,5 +174,9 @@ public class WelcomeView {
 
     public int getColumns() {
         return sliderColumns.getValue();
+    }
+    
+    public KI getStrength() {
+        return (KI) strength.getSelectedItem();
     }
 }

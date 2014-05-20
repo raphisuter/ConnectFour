@@ -38,4 +38,9 @@ public class KIMedium implements KI {
         int n = random.nextInt(columns.size());
         return columns.get(n);
     }
+    
+    @Override
+    public String toString() {
+        return "Mittel";
+    }
 }

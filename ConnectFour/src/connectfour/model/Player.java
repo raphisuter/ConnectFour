@@ -1,5 +1,6 @@
 package connectfour.model;
 
+import connectfour.ki.KI;
 import connectfour.ki.KIMedium;
 import java.awt.Color;
 
@@ -49,8 +50,8 @@ public abstract class Player {
         return new LocalPlayer(1, System.getProperty("user.name"), Color.red);
     }
 
-    public static Player createComputerPlayer(int cols, int rows) {
-        return new ComputerPlayer(2, "Computer", Color.yellow, cols, rows, new KIMedium());
+    public static Player createComputerPlayer(KI ki, int cols, int rows) {
+        return new ComputerPlayer(2, "Computer", Color.yellow, cols, rows, ki);
     }
     
     public static Player createNetworkPlayer(String ip) {

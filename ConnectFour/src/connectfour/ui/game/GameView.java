@@ -124,7 +124,7 @@ public class GameView {
         menuItemClose = new JMenuItem("Beenden");
 
         menuBar.add(menuGame);
-        menuGame.add(menuItemRestart);
+        //menuGame.add(menuItemRestart);
         menuGame.add(menuItemClose);
     }
 
