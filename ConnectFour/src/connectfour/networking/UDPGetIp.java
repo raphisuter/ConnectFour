@@ -36,7 +36,6 @@ public class UDPGetIp{
                 try {
                     socket.receive(packet);
                     data = new String(packet.getData(), 0, packet.getLength());
-                    System.out.println(data);
                     //Nur wenn UDP Anfrage von unserem Spiel, offenen Server in Liste aufnehmen
                     if(data.contains(NetworkHelper.CONNECT_TO_SERVER)){
                         String[] stringArray = packet.getAddress().toString().split("/");
