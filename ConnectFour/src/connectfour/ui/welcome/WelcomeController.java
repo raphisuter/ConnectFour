@@ -63,6 +63,9 @@ public class WelcomeController {
                 UDPClient uClient = new UDPClient();
                 uClient.start();
                 
+                // View schliessen
+                view.close();
+                
                 // Controller starten
                 SearchServerController controller = new SearchServerController(uClient);
                 controller.showView();
