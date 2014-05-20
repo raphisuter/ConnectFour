@@ -66,7 +66,11 @@ public class WelcomeController {
                 // Auf IP Adresse meines gegenüber warten
                 UDPGetIp udpGetIp = new UDPGetIp();
                 String ip = udpGetIp.getIp();
-                System.out.println("IP erhalten! --- " + ip);
+                System.out.println("Gegner gefunden und seine IP erhalten! --- " + ip);
+                
+                // UDP Server stoppen
+                uServer.setStoppThread(true);
+                
                 // View ausblenden
                 view.close();
                 
@@ -77,9 +81,6 @@ public class WelcomeController {
                 // Spiel starten
                 GameController controller = new GameController(startPlayer, otherPlayer, DefaultConfiguration.COLUMNS, DefaultConfiguration.ROWS);
                 controller.showView();
-                
-                // UDP Server stoppen
-                uServer.setStoppThread(true);
             }
         });
 
