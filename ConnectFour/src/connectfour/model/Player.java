@@ -1,7 +1,6 @@
 package connectfour.model;
 
 import connectfour.ki.KIMedium;
-import connectfour.ui.welcome.WelcomeView;
 import java.awt.Color;
 
 /**
@@ -9,16 +8,14 @@ import java.awt.Color;
  * @author Alex
  */
 public abstract class Player {
-    
-    private int id;
-    
-    private String name;
-    
-    private Color color;
-    
-    private boolean firstMove;
 
-    public Player(int id, String name, Color color) {
+    private int id;
+
+    private String name;
+
+    private Color color;
+
+    Player(int id, String name, Color color) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -39,34 +36,29 @@ public abstract class Player {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public void setColor(Color color) {
         this.color = color;
     }
-    
+
     public Color getColor() {
         return color;
     }
-    
+
     public static Player createLocalPlayer() {
-        return new LocalPlayer(1, "Lokaler Spieler", Color.red);
+        return new LocalPlayer(1, System.getProperty("user.name"), Color.red);
     }
-    
-      public static Player createComputerPlayer(int cols, int rows) {
+
+    public static Player createComputerPlayer(int cols, int rows) {
         return new ComputerPlayer(2, "Computer", Color.yellow, cols, rows, new KIMedium());
     }
-
-    public boolean isFirstMove() {
-        return firstMove;
-    }
-
-    public void setFirstMove(boolean firstMove) {
-        this.firstMove = firstMove;
-    }
     
+    public static Player createNetworkPlayer(String ip) {
+        return new NetworkPlayer(2, "Netzwerkspieler " + ip, Color.yellow, ip);
+    }
+
     public abstract void sendThrow(int column);
-    
-    public abstract int getNextThrow();
-    
-}
 
+    public abstract int getNextThrow();
+
+}
