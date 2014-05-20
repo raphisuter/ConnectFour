@@ -69,7 +69,7 @@ public class WelcomeController {
                 System.out.println("Gegner verbindet sich - " + ip);
                 
                 // UDP Server stoppen
-                uServer.setStoppThread(true);
+                //uServer.setStoppThread(true);
                 
                 // View ausblenden
                 view.close();

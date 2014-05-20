@@ -23,9 +23,8 @@ public class TCPCommunicator {
     private InetAddress opponentAddr;
     
     public TCPCommunicator(String ipAddressOponent) {
-        String[] stringArray = ipAddressOponent.split("/");
         try{
-            opponentAddr = InetAddress.getByName(stringArray[1]);
+            opponentAddr = InetAddress.getByName(ipAddressOponent);
         }catch(UnknownHostException e){
             e.printStackTrace();
         }
