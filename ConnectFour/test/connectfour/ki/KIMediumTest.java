@@ -16,13 +16,13 @@ import static org.junit.Assert.*;
  *
  * @author Tom
  */
-public class KIHardTest {
+public class KIMediumTest {
 
-    private KIHard ki;
+    private KIMedium ki;
 
     @Before
     public void setUp() {
-        ki = new KIHard();
+        ki = new KIMedium();
     }
 
    /*  @Test

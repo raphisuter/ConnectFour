@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author Tom
  */
-public class KIHard implements KI {
+public class KIMedium implements KI {
 
     @Override
     public int getNextStone(int[][] gameField, Player you, Player enemy) throws FieldIsFullException {
@@ -39,7 +39,7 @@ public class KIHard implements KI {
 
     private int chooseColumn(List<Integer> columns) {
         Random random = new Random();
-        //System.out.println(columns.size());
+        System.out.println(columns.size());
         int n = random.nextInt(columns.size());
         return columns.get(n);
     }
