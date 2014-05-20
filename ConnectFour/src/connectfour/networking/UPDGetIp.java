@@ -16,35 +16,52 @@ import java.net.SocketTimeoutException;
  */
 public class UPDGetIp{
     
+    private boolean ipReceived;
+    
+    public UPDGetIp(){
+        ipReceived = false;
+    }
+    
     public String getIp(){
         String ip = "";
         try(DatagramSocket socket = new DatagramSocket(NetworkHelper.Port)){
             byte[] buf = new byte[1000];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             
-            //Timeout festlegen (8 Sekunden)
-            socket.setSoTimeout(8000);
+            //Timeout festlegen (40 Sekunden)
+            socket.setSoTimeout(40000);
             String data = "";
             // recieve data until timeout
-            
-            try {
-                socket.receive(packet);
-                data = new String(packet.getData(), 0, packet.getLength());
-                //Nur wenn UDP Anfrage von unserem Spiel, offenen Server in Liste aufnehmen
-                if(data.contains(NetworkHelper.CONNECT_TO_SERVER)){
-                    ip = packet.getAddress().toString();
+            while(!ipReceived){
+                try {
+                    socket.receive(packet);
+                    data = new String(packet.getData(), 0, packet.getLength());
+                    //Nur wenn UDP Anfrage von unserem Spiel, offenen Server in Liste aufnehmen
+                    if(data.contains(NetworkHelper.CONNECT_TO_SERVER)){
+                        ip = packet.getAddress().toString();
+                        ipReceived = true;
+                    }
+                }
+                catch (SocketTimeoutException e) {
+                    // timeout exception.
+                    System.out.println("Timeout reached");
+                    return null;
                 }
             }
-            catch (SocketTimeoutException e) {
-                // timeout exception.
-                System.out.println("Timeout reached");
-                return null;
-            }
-            System.out.println("Client geschlossen");
+            System.out.println("UDPGetIp geschlossen");
         }catch(Exception e){
             System.err.println("Error: "+ e.getMessage());
             return null;
         }
         return ip;
     }
+
+    public boolean isIpReceived() {
+        return ipReceived;
+    }
+
+    public void setIpReceived(boolean ipReceived) {
+        this.ipReceived = ipReceived;
+    }
+    
 }
