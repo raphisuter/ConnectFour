@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 public class WelcomeController {
 
     private WelcomeModel model;
-
     private WelcomeView view;
 
     public WelcomeController() {
@@ -25,30 +24,31 @@ public class WelcomeController {
         this.view.addActionListenerSinglePlayer(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.setPlayComputer(true);
-                model.setPlayHuman(false);
-                view.close();
+                    int rows = (view.getRows());
+                    int columns = (view.getColumns());
+                    model.setPlayComputer(true);
+                    model.setPlayHuman(false);
+                    view.close();
+                    Player player1 = Player.createLocalPlayer();
+                    Player player2 = Player.createComputerPlayer(view);
 
-                Player player1 = Player.createLocalPlayer();
-                Player player2 = Player.createComputerPlayer();
-                
-                GameController controller = new GameController(player1, player2, 7, 6);
-                controller.showView();
+                    GameController controller = new GameController(player1, player2, columns, rows);
+                    controller.showView();
+
+
             }
-
         });
 
         this.view.addActionListenerMultiPlayerOpen(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 //Test Raphael - nicht löschen
                 UDPServer uServer = new UDPServer(20);
                 uServer.start();
             }
-
         });
-        
+
         this.view.addActionListenerMultiPlayerJoin(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,7 +57,6 @@ public class WelcomeController {
                 UDPClient uClient = new UDPClient();
                 uClient.start();
             }
-
         });
 
     }
@@ -65,5 +64,4 @@ public class WelcomeController {
     public void showView() {
         this.view.show();
     }
-
 }

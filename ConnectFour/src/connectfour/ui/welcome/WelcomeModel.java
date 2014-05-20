@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package connectfour.ui.welcome;
 
 /**
@@ -13,53 +12,59 @@ package connectfour.ui.welcome;
 public class WelcomeModel {
 
     private boolean playComputer;
-    
     private boolean playHuman;
-    
     private String playerName;
-    
-    public WelcomeModel()
-    {
-    
+    private int numberOfRows;
+    private int numberOfColumns;
+
+    public WelcomeModel() {
     }
-    
-    
-    
+
     /**
      * Setter-Methods
-     * @return 
+     *
+     * @return
      */
-    public void setPlayComputer(boolean setComputer)
-    {
+    public void setPlayComputer(boolean setComputer) {
         playComputer = setComputer;
     }
-    
-    public void setPlayHuman(boolean setHuman)
-    {
+
+    public void setPlayHuman(boolean setHuman) {
         playComputer = setHuman;
     }
-    
-    public void setPlayerName(String setName)
-    {
+
+    public void setPlayerName(String setName) {
         playerName = setName;
     }
-    
+
+    public void setNumberOfRows(int setRows) {
+        numberOfRows = setRows;
+    }
+
+    public void setNumberOfColumns(int setColumns) {
+        numberOfColumns = setColumns;
+    }
+
     /**
      * Getter Methods
      */
-    public boolean getPlayComputer()
-    {
+    public boolean getPlayComputer() {
         return playComputer;
     }
-    
-    public boolean getPlayHuman()
-    {
+
+    public boolean getPlayHuman() {
         return playHuman;
     }
-    
-    public String getPlayerName()
-    {
+
+    public String getPlayerName() {
         return playerName;
     }
-    
+
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    public int getNumberOfColumns() {
+        return numberOfColumns;
+    }
 }
