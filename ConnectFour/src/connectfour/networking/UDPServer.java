@@ -20,7 +20,7 @@ import java.net.InetAddress;
 public class UDPServer extends Thread{
     
     int maxAttemps;
-    boolean hasOponent = false;
+    boolean stoppThread = false;
     
     public UDPServer(int maxAttemps) {
         //this.maxAttemps = maxAttemps;
@@ -33,7 +33,7 @@ public class UDPServer extends Thread{
         System.out.println("Starte UDP-Broadcast");
         //Versuche so lange einen Server zu erreichen, bis Antwort oder
         //maxAttemps grösser als countOfAttemps
-        while(maxAttemps >= countOfAttemps){
+        while(maxAttemps >= countOfAttemps || !stoppThread){
             try(DatagramSocket socket = new DatagramSocket()){
                 String broadcast = "255.255.255.255";
                 InetAddress address = InetAddress.getByName(broadcast);
@@ -48,5 +48,14 @@ public class UDPServer extends Thread{
                 System.err.println("Error: "+ e.getMessage());
             }
         }
+    }
+
+    public boolean isStoppThread() {
+        return stoppThread;
+    }
+
+    public void setStoppThread(boolean stoppThread) {
+        this.stoppThread = stoppThread;
+        System.out.println("UDP-Broadcast gestoppt");
     }
 }

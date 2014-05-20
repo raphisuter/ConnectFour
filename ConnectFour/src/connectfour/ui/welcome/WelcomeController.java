@@ -52,6 +52,12 @@ public class WelcomeController {
                 // TODO Ist diese Anzahl ok?
                 UDPServer uServer = new UDPServer(20);
                 uServer.start();
+                
+                //Hier das Spiel eröffnen und auf den ersten Stein des 
+                //Gegners via TCPCommunicator warten
+                
+                //Gameview anzeigen und WelcomeView ausblenden
+                uServer.setStoppThread(true);
             }
         });
 

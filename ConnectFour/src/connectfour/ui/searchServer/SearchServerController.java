@@ -62,7 +62,7 @@ public class SearchServerController {
                 NetworkPlayer networkPlayer = new NetworkPlayer(2, "Netzwerkspieler " + ip , Color.GREEN, ip);
                 
                 GameController controller = new GameController(networkPlayer, Player.createLocalPlayer(), 7, 6);
-                
+                controller.showView();
             }
 
         });

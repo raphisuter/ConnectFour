@@ -6,7 +6,13 @@
 
 package connectfour.networking;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
@@ -23,14 +29,29 @@ public class TCPCommunicator {
             opponentAddr = InetAddress.getByName(stringArray[1]);
         }catch(UnknownHostException e){
             e.printStackTrace();
-        }   
+        }
     }
     
     public void sendThrow(int column){
-        
+        try(Socket client = new Socket(opponentAddr, NetworkHelper.Port)){
+            PrintWriter outStream = new PrintWriter(client.getOutputStream());
+            outStream.println(column);
+            outStream.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
     
     public int receiveThrow(){
+        try(Socket client = new Socket(opponentAddr, NetworkHelper.Port)){
+            BufferedReader inStream = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            String line;
+            while((line = inStream.readLine()) != null){
+                return Integer.parseInt(line);
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         return 0;
     }
 
