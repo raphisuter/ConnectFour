@@ -21,12 +21,12 @@ import java.util.List;
 public class UDPClient extends Thread{
     
     private List<String> clientAddressList;
-    private boolean timeout;
+    private boolean stopThread;
     
     public UDPClient(){
         //Beim erzeugen des UDPClients variablen initialisieren
         clientAddressList = new ArrayList<String>();
-        timeout = false;
+        stopThread = false;
     }
     
     @Override
@@ -39,7 +39,7 @@ public class UDPClient extends Thread{
             socket.setSoTimeout(40000);
             String data = "";
             // recieve data until timeout
-            while(true){      
+            while(!stopThread){  
                 try {
                     socket.receive(packet);
                     data = new String(packet.getData(), 0, packet.getLength());
@@ -55,12 +55,14 @@ public class UDPClient extends Thread{
                     System.out.println("Timeout reached");
                     
                 }
-            }             
+            }
+            System.out.println("Client geschlossen");
         }catch(Exception e){
             System.err.println("Error: "+ e.getMessage());
         }
     }
 
+    
     /*          Getter und Setter            */
     public List<String> getClientAddressList() {
         return clientAddressList;
@@ -70,11 +72,11 @@ public class UDPClient extends Thread{
         this.clientAddressList = clientAddressList;
     }
 
-    public boolean isTimeout() {
-        return timeout;
+    public boolean isStopThread() {
+        return stopThread;
     }
 
-    public void setTimeout(boolean timeout) {
-        this.timeout = timeout;
+    public void setStopThread(boolean stopThread) {
+        this.stopThread = stopThread;
     }
 }
