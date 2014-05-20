@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
  *
  * @author Alex
  */
-// TODO Implementierung von MVC durch Java Beginners :)
 public class WelcomeView {
 
     private final String FRAME_TITLE = "Connect 4 - Welcome";
@@ -45,7 +44,6 @@ public class WelcomeView {
         createMultiPlayerButtonJoin();
         createFieldSizeSliders();
 
-
         createLayout();
         setupLayout();
 
@@ -75,7 +73,6 @@ public class WelcomeView {
 
     private void setupLayout() {
 
-
         textLabel1.setBounds(85, 30, 200, 30);
         textLabel2.setBounds(390, 30, 200, 30);
         textLabel3.setBounds(40, 110, 200, 30);
@@ -99,8 +96,6 @@ public class WelcomeView {
         frame.getContentPane().add(multiPlayerButtonJoin);
         frame.getContentPane().add(sliderRows);
         frame.getContentPane().add(sliderColumns);
-
-
 
     }
 
@@ -128,6 +123,7 @@ public class WelcomeView {
         sliderRows = new JSlider(JSlider.HORIZONTAL, 4, 20, 6);
         sliderColumns = new JSlider(JSlider.HORIZONTAL, 4, 20, 7);
         sliderRows.setMinorTickSpacing(1);
+        sliderRows.setMajorTickSpacing(1);
         sliderRows.setPaintTicks(true);
         sliderRows.setPaintLabels(true);
         sliderColumns.setMinorTickSpacing(1);

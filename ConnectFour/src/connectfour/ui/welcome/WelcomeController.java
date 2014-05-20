@@ -4,7 +4,7 @@ import connectfour.model.Player;
 import connectfour.networking.UDPServer;
 import connectfour.networking.UDPClient;
 import connectfour.ui.game.GameController;
-import java.awt.Color;
+import connectfour.ui.searchServer.SearchServerController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,18 +24,23 @@ public class WelcomeController {
         this.view.addActionListenerSinglePlayer(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    int rows = (view.getRows());
-                    int columns = (view.getColumns());
+                    
+                    // Daten setzen
+                    model.setNumberOfColumns(view.getColumns());
+                    model.setNumberOfRows(view.getRows());
                     model.setPlayComputer(true);
                     model.setPlayHuman(false);
+                    
+                    // View schliessen
                     view.close();
-                    Player player1 = Player.createLocalPlayer();
-                    Player player2 = Player.createComputerPlayer(view);
+                    
+                    // Spieler erzeugen
+                    Player startPlayer = Player.createLocalPlayer();
+                    Player otherPlayer = Player.createComputerPlayer(view);
 
-                    GameController controller = new GameController(player1, player2, columns, rows);
+                    // Game starten
+                    GameController controller = new GameController(startPlayer, otherPlayer, model.getNumberOfColumns(), model.getNumberOfRows());
                     controller.showView();
-
-
             }
         });
 
@@ -43,7 +48,8 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //UDPServer Thread mit maxAnzahl versuchen erzeugen und starten
+                // UDPServer Thread mit maxAnzahl versuchen erzeugen und starten
+                // TODO Ist diese Anzahl ok?
                 UDPServer uServer = new UDPServer(20);
                 uServer.start();
             }
@@ -53,9 +59,13 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //Test Raphael - nicht löschen
+                // UDPClient starten
                 UDPClient uClient = new UDPClient();
                 uClient.start();
+                
+                // Controller starten
+                SearchServerController controller = new SearchServerController(uClient);
+                controller.showView();
             }
         });
 

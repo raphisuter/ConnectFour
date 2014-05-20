@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package connectfour.ui.welcome;
 
 /**
@@ -20,11 +15,6 @@ public class WelcomeModel {
     public WelcomeModel() {
     }
 
-    /**
-     * Setter-Methods
-     *
-     * @return
-     */
     public void setPlayComputer(boolean setComputer) {
         playComputer = setComputer;
     }
@@ -45,9 +35,6 @@ public class WelcomeModel {
         numberOfColumns = setColumns;
     }
 
-    /**
-     * Getter Methods
-     */
     public boolean getPlayComputer() {
         return playComputer;
     }
