@@ -8,13 +8,12 @@ package connectfour.ui.searchServer;
 import connectfour.model.NetworkPlayer;
 import connectfour.model.Player;
 import connectfour.networking.UDPClient;
+import connectfour.networking.UDPPlay;
 import connectfour.ui.game.GameController;
 import connectfour.ui.welcome.WelcomeController;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -58,6 +57,10 @@ public class SearchServerController {
                 System.out.println("Verbinden wurde gedrückt"); //Test-Statement
                 
                 String ip = view.getSelectedIPaddress();
+                
+                //Antwort an den Server mit der IP, so dass die sich verbinden können
+                UDPPlay uplay = new UDPPlay(ip);
+                uplay.start();
                 
                 NetworkPlayer networkPlayer = new NetworkPlayer(2, "Netzwerkspieler " + ip , Color.GREEN, ip);
                 

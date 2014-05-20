@@ -55,7 +55,7 @@ public class TCPCommunicator {
         return 0;
     }
 
-    public InetAddress getOpponentAddr() {
+    public InetAddress getOpponentAddr(){
         return opponentAddr;
     }
 

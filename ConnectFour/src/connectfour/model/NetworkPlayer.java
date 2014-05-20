@@ -25,8 +25,6 @@ public class NetworkPlayer extends Player {
 
 	@Override
 	public int getNextThrow() {
-		int i = comm.receiveThrow();
-		return i;
+		return comm.receiveThrow();
 	}
-        
 }

@@ -6,12 +6,10 @@
 
 package connectfour.networking;
 
-import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class UDPClient extends Thread{
             socket.setSoTimeout(40000);
             String data = "";
             // recieve data until timeout
-            while(!stopThread){  
+            while(!stopThread){
                 try {
                     socket.receive(packet);
                     data = new String(packet.getData(), 0, packet.getLength());
@@ -61,7 +59,6 @@ public class UDPClient extends Thread{
             System.err.println("Error: "+ e.getMessage());
         }
     }
-
     
     /*          Getter und Setter            */
     public List<String> getClientAddressList() {
