@@ -29,6 +29,7 @@ public class UDPServer extends Thread{
     @Override
     public void run(){
         int countOfAttemps = 1;
+        System.out.println("Starte UDP-Broadcast");
         //Versuche so lange einen Server zu erreichen, bis Antwort oder
         //maxAttemps grösser als countOfAttemps
         while(maxAttemps >= countOfAttemps){
@@ -40,8 +41,8 @@ public class UDPServer extends Thread{
                 DatagramPacket packet = new DatagramPacket(raw, raw.length, address, 12345);
                 socket.send(packet);
                 countOfAttemps++;
-                //Sende jede Sekunde eine Abfrage
-                Thread.sleep(1000);
+                //Sende alle 2 Sekunden eine Broadcast Meldung
+                Thread.sleep(2000);
             }catch(Exception e){
                 System.err.println("Error: "+ e.getMessage());
             }
