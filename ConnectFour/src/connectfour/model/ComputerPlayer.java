@@ -16,7 +16,7 @@ public class ComputerPlayer extends Player {
     
     int lastRow = 0;
     
-    public ComputerPlayer(int id, String name, Color color, int cols, int rows, KI ki) {
+    ComputerPlayer(int id, String name, Color color, int cols, int rows, KI ki) {
         super(id, name, color);
         super.setName("Computer");
         this.ki = ki;
