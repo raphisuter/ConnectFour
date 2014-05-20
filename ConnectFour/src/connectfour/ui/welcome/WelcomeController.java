@@ -43,7 +43,7 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                //Test Raphael - nicht löschen
+                //UDPServer Thread mit maxAnzahl versuchen erzeugen und starten
                 UDPServer uServer = new UDPServer(20);
                 uServer.start();
             }
