@@ -1,8 +1,11 @@
 package connectfour.ui.welcome;
 
+import connectfour.model.DefaultConfiguration;
+import connectfour.model.NetworkPlayer;
 import connectfour.model.Player;
 import connectfour.networking.UDPServer;
 import connectfour.networking.UDPClient;
+import connectfour.networking.UPDGetIp;
 import connectfour.ui.game.GameController;
 import connectfour.ui.searchServer.SearchServerController;
 import java.awt.event.ActionEvent;
@@ -48,15 +51,27 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // UDPServer Thread mit maxAnzahl versuchen erzeugen und starten
+                // UDPServer instanziieren mit max. Anzahl versuchen 20
                 // TODO Ist diese Anzahl ok?
                 UDPServer uServer = new UDPServer(20);
                 uServer.start();
                 
-                //Hier das Spiel eröffnen und auf den ersten Stein des 
-                //Gegners via TCPCommunicator warten
+                // Auf IP Adresse meines gegenüber warten
+                UPDGetIp udpGetIp = new UPDGetIp();
+                String ip = udpGetIp.getIp();
                 
-                //Gameview anzeigen und WelcomeView ausblenden
+                // View ausblenden
+                view.close();
+                
+                // Player erzeugen 
+                Player startPlayer = Player.createNetworkPlayer(ip);
+                Player otherPlayer = Player.createLocalPlayer();
+                
+                // Spiel starten
+                GameController controller = new GameController(startPlayer, otherPlayer, DefaultConfiguration.COLUMNS, DefaultConfiguration.ROWS);
+                controller.showView();
+                
+                // UDP Server stoppen
                 uServer.setStoppThread(true);
             }
         });

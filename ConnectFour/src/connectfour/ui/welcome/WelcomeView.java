@@ -1,5 +1,6 @@
 package connectfour.ui.welcome;
 
+import connectfour.model.DefaultConfiguration;
 import connectfour.ui.util.CenterWindowUtil;
 import connectfour.ui.util.Icon;
 
@@ -33,6 +34,7 @@ public class WelcomeView {
     private JButton multiPlayerButtonOpen;
     private JButton multiPlayerButtonJoin;
     private JFrame frame;
+    private JComboBox<String> strength;
 
     public WelcomeView() {
         createFrame();
@@ -43,10 +45,10 @@ public class WelcomeView {
         createMultiPlayerButtonOpen();
         createMultiPlayerButtonJoin();
         createFieldSizeSliders();
+        createStrength();
 
         createLayout();
         setupLayout();
-
     }
 
     public void show() {
@@ -62,9 +64,9 @@ public class WelcomeView {
         frame = new JFrame(FRAME_TITLE);
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        CenterWindowUtil.center(frame);
         frame.setResizable(false);
         frame.setIconImages(Icon.getIconListGamepad());
+        CenterWindowUtil.center(frame);
     }
 
     private void createLayout() {
@@ -76,8 +78,8 @@ public class WelcomeView {
         // Einzelspieler
         textLabel1.setBounds(40, 30, 100, 30);
         
-        textLabel3.setBounds(40, 70, 100, 30);
-        textLabel4.setBounds(40, 120, 100, 30);
+        textLabel4.setBounds(40, 70, 100, 30);
+        textLabel3.setBounds(40, 120, 100, 30);
         
         sliderColumns.setBounds(150, 75, 400, 50);
         sliderRows.setBounds(150, 125, 400, 50);
@@ -125,20 +127,25 @@ public class WelcomeView {
     }
 
     private void createFieldSizeSliders() {
-        sliderRows = new JSlider(JSlider.HORIZONTAL, 4, 20, 6);
-        sliderColumns = new JSlider(JSlider.HORIZONTAL, 4, 20, 7);
-        
-        sliderRows.setMinorTickSpacing(1);
-        sliderRows.setMajorTickSpacing(1);
-        sliderRows.setPaintTicks(true);
-        sliderRows.setPaintLabels(true);
-        
-        sliderColumns.setMinorTickSpacing(1);
-        sliderColumns.setMajorTickSpacing(1);
-        sliderColumns.setPaintTicks(true);
-        sliderColumns.setPaintLabels(true);
+        sliderRows = createSlider(DefaultConfiguration.ROWS);
+        sliderColumns = createSlider(DefaultConfiguration.COLUMNS);
+    }
+    
+    private void createStrength() {
+        //strength = new JComboBox<>({"Schwach", "Mittel"});
     }
 
+    private JSlider createSlider(int defaultValue) {
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 4, 20, defaultValue);
+        
+        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        
+        return slider;
+    }
+    
     public void addActionListenerSinglePlayer(ActionListener Listener) {
         singlePlayerButton.addActionListener(Listener);
     }
