@@ -26,8 +26,6 @@ public class SearchServerController {
 
     private SearchServerModel model;
     private SearchServerView view;
-
-    private String selectedIPAdress;
     
     private UDPClient client;
 
@@ -37,14 +35,6 @@ public class SearchServerController {
         Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        
-        System.out.println("heyhou");
-        if (setClient.getClientAddressList().isEmpty()) {
-            System.out.println("is empty");
-        }
-        for (String s : setClient.getClientAddressList() ) {
-            System.out.println(s);
         }
         
         this.view = new SearchServerView(setClient.getClientAddressList().toArray());
@@ -84,6 +74,9 @@ public class SearchServerController {
                 System.out.println("Zurück wurde gedrückt"); //Test-Statement
                 
                 view.close();
+                
+                //UDPClient stoppen
+                client.setStopThread(true);
                 
                 WelcomeController controller = new WelcomeController();
                 controller.showView();
