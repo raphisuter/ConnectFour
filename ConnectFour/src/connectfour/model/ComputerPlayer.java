@@ -4,13 +4,12 @@ import java.awt.Color;
 
 import connectfour.ki.FieldIsFullException;
 import connectfour.ki.KI;
-import connectfour.ki.KIMedium;
 
 public class ComputerPlayer extends Player {
 
-    private KI ki;
+    private final KI ki;
     
-    private int[][] theArray;
+    private final int[][] theArray;
     
     int maxRow = 0;
     
@@ -46,7 +45,7 @@ public class ComputerPlayer extends Player {
         try {
             Thread.sleep(600);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return column;
     }
