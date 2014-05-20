@@ -9,7 +9,6 @@ package connectfour.networking;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketTimeoutException;
 
 /**
  *
@@ -33,6 +32,7 @@ public class UDPPlay extends Thread{
             raw = NetworkHelper.CONNECT_TO_SERVER.getBytes();
             DatagramPacket packet = new DatagramPacket(raw, raw.length, address, NetworkHelper.Port);
             socket.send(packet);
+            System.out.println("Connect gesendet");
         }catch(Exception e){
             System.err.println("Error: "+ e.getMessage());
         }

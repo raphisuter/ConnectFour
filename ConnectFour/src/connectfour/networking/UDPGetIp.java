@@ -14,11 +14,11 @@ import java.net.SocketTimeoutException;
  *
  * @author Suter Raphael <raphael.suter@stud.hslu.ch>
  */
-public class UPDGetIp{
+public class UDPGetIp{
     
     private boolean ipReceived;
     
-    public UPDGetIp(){
+    public UDPGetIp(){
         ipReceived = false;
     }
     
@@ -36,9 +36,11 @@ public class UPDGetIp{
                 try {
                     socket.receive(packet);
                     data = new String(packet.getData(), 0, packet.getLength());
+                    System.out.println(data);
                     //Nur wenn UDP Anfrage von unserem Spiel, offenen Server in Liste aufnehmen
                     if(data.contains(NetworkHelper.CONNECT_TO_SERVER)){
                         ip = packet.getAddress().toString();
+                        System.out.println(ip);
                         ipReceived = true;
                     }
                 }

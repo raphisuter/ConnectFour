@@ -6,7 +6,7 @@ import connectfour.model.Player;
 import connectfour.model.RandomStarter;
 import connectfour.networking.UDPServer;
 import connectfour.networking.UDPClient;
-import connectfour.networking.UPDGetIp;
+import connectfour.networking.UDPGetIp;
 import connectfour.ui.game.GameController;
 import connectfour.ui.searchServer.SearchServerController;
 import java.awt.event.ActionEvent;
@@ -64,7 +64,7 @@ public class WelcomeController {
                 uServer.start();
                 
                 // Auf IP Adresse meines gegenüber warten
-                UPDGetIp udpGetIp = new UPDGetIp();
+                UDPGetIp udpGetIp = new UDPGetIp();
                 String ip = udpGetIp.getIp();
                 
                 // View ausblenden
