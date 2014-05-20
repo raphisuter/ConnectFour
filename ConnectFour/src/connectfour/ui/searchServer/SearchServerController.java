@@ -23,9 +23,9 @@ public class SearchServerController {
     public SearchServerController(UDPClient setClient) {
         this.model = new SearchServerModel();
         
-        // Wir warten 2 Sekunden bis auf dem Client die IP Adress Liste gestzt ist.
+        // Wir warten 1 Sekunde bis auf dem Client die IP Adress Liste gestzt ist.
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

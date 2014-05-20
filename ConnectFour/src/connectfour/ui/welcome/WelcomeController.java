@@ -58,9 +58,9 @@ public class WelcomeController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // UDPServer instanziieren mit max. Anzahl versuchen 20
+                // UDPServer instanziieren mit max. Anzahl versuchen 50
                 // TODO Ist diese Anzahl ok?
-                UDPServer uServer = new UDPServer(20);
+                UDPServer uServer = new UDPServer(50);
                 uServer.start();
                 
                 // Auf IP Adresse meines gegenüber warten

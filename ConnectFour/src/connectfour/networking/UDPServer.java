@@ -23,8 +23,7 @@ public class UDPServer extends Thread{
     boolean stoppThread = false;
     
     public UDPServer(int maxAttemps) {
-        //this.maxAttemps = maxAttemps;
-        this.maxAttemps = 5000;
+        this.maxAttemps = maxAttemps;
     }
     
     @Override
@@ -42,8 +41,8 @@ public class UDPServer extends Thread{
                 DatagramPacket packet = new DatagramPacket(raw, raw.length, address, NetworkHelper.Port);
                 socket.send(packet);
                 countOfAttemps++;
-                //Sende alle 2 Sekunden eine Broadcast Meldung
-                Thread.sleep(2000);
+                //Sende alle 0.5 Sekunden eine Broadcast Meldung
+                Thread.sleep(500);
             }catch(Exception e){
                 System.err.println("Error: "+ e.getMessage());
             }
