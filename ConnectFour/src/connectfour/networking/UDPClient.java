@@ -46,8 +46,8 @@ public class UDPClient extends Thread{
                     //Nur wenn UDP Anfrage von unserem Spiel, offenen Server in Liste aufnehmen
                     if(data.contains(NetworkHelper.SEARCH_SERVER)){
                         System.out.println(packet.getAddress()+ " is a ConnectFour Server");
-                        if(!this.clientAddressList.contains(packet.getAddress().toString()))
-                            this.clientAddressList.add(data.substring(31) + " - " + packet.getAddress().toString());
+                        if(!this.clientAddressList.contains(data.substring(33) + " - " +  packet.getAddress().toString()))
+                            this.clientAddressList.add(data.substring(33) + " - " + packet.getAddress().toString());
                     }
                 }
                 catch (SocketTimeoutException e) {
