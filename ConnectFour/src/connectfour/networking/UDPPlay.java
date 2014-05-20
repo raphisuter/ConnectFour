@@ -20,7 +20,6 @@ public class UDPPlay extends Thread{
     
     public UDPPlay(String ipAddress){
         String[] stringArray = ipAddress.split("/");
-        
         this.ipAddress = stringArray[1];
     }
     

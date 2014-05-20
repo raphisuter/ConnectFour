@@ -23,6 +23,11 @@ public class TCPCommunicator {
     private InetAddress opponentAddr;
     
     public TCPCommunicator(String ipAddressOponent) {
+        if(ipAddressOponent.contains("/")){
+            String [] addr = ipAddressOponent.split("/");
+            ipAddressOponent = addr[1];
+        }
+
         try{
             opponentAddr = InetAddress.getByName(ipAddressOponent);
         }catch(UnknownHostException e){
