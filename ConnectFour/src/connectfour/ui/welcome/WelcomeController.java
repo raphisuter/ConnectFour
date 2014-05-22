@@ -75,8 +75,8 @@ public class WelcomeController {
                 view.close();
                 
                 // Player erzeugen 
-                Player startPlayer = Player.createNetworkPlayer(ip);
-                Player otherPlayer = Player.createLocalPlayer();
+                Player otherPlayer = Player.createNetworkPlayer(ip);
+                Player startPlayer = Player.createLocalPlayer();
                 
                 // Spiel starten
                 GameController controller = new GameController(startPlayer, otherPlayer, DefaultConfiguration.COLUMNS, DefaultConfiguration.ROWS);
