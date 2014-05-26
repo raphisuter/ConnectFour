@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package connectfour.networking;
 
 import java.io.BufferedReader;
@@ -17,34 +16,37 @@ import java.net.UnknownHostException;
 /**
  *
  * @author Suter Raphael <raphael.suter@stud.hslu.ch>
+ *
+ * Diese Klasse ist für den Netzwerkverkehr während des Spiels zuständig. Es
+ * muss die Addresse des Gegners abgelegt werden und es können Steine gesendet
+ * und empfangen werden
  */
 public class TCPCommunicator {
-    
+
     private InetAddress opponentAddr;
-    
+
+    //Konstruktor inklusiv Addressparser
     public TCPCommunicator(String ipAddressOponent) {
-        if(ipAddressOponent.contains("/")){
-            String [] addr = ipAddressOponent.split("/");
+        if (ipAddressOponent.contains("/")) {
+            String[] addr = ipAddressOponent.split("/");
             ipAddressOponent = addr[1];
         }
 
-        try{
+        //Addresse auflösen und Ablegen
+        try {
             opponentAddr = InetAddress.getByName(ipAddressOponent);
-        }catch(UnknownHostException e){
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }
-    
-    public void sendThrow(int column){
-        /*try(Socket client = new Socket(opponentAddr, NetworkHelper.Port)){
-            PrintWriter outStream = new PrintWriter(client.getOutputStream());
-            outStream.println(column);
-            outStream.flush();
-        }catch(IOException e){
-            e.printStackTrace();
-        }*/
-        
-        try (Socket sock = new Socket(opponentAddr, NetworkHelper.Port)){
+
+    //Diese Methode senden einen Zug an den Gegenspieler
+    /*
+     Ein Socket wird mithilfe der Addresse und dem Port erstellt und
+     anschliessend wird der Zug an den Gegner gesendet
+     */
+    public void sendThrow(int column) {
+        try (Socket sock = new Socket(opponentAddr, NetworkHelper.Port)) {
             PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
             //Output
             out.println(column);
@@ -52,50 +54,47 @@ public class TCPCommunicator {
 
             out.close();
             sock.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
-    
-    public int receiveThrow(){
-        /*
-        try(Socket client = new Socket(opponentAddr, NetworkHelper.Port)){
-            BufferedReader inStream = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            String line;
-            while((line = inStream.readLine()) != null){
-                return Integer.parseInt(line);
+
+    //Diese Methode empfängt den Zug des Gegenspielers
+    /*
+     Es wird ein Socket erstellt und anschliessend auf einem Port auf den
+     Input gewarted. Da es kein Thread ist, wird in dieser Methode gewarted
+     bis ein Stein empfangen wird
+     */
+    public int receiveThrow() {
+        int retValue = 0;
+        try (ServerSocket serverSock = new ServerSocket(NetworkHelper.Port)) {
+            try (Socket clientSock = serverSock.accept()) {
+                //Get input
+                BufferedReader br = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
+                retValue = (Integer.parseInt(br.readLine()));
+
+                br.close();
+
+                clientSock.close();
+            } catch (Exception eo) {
+                //eo.printStackTrace();
+                retValue = 0;
             }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        return 0;
-        */
-        
-        try (ServerSocket serverSock = new ServerSocket(NetworkHelper.Port)){
-            //Get connection
-            Socket clientSock = serverSock.accept();
-            System.out.println("Connected client");
-
-            //Get input
-            BufferedReader br = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
-            int ret = (Integer.parseInt(br.readLine()));
-
-            br.close();
             serverSock.close();
-            clientSock.close();
-            return ret;
-        } catch(Exception e) {
-            e.printStackTrace();
-            return 0;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            retValue = 0;
         }
+        return retValue;
     }
 
-    public InetAddress getOpponentAddr(){
+    //Getter und Setter
+    public InetAddress getOpponentAddr() {
         return opponentAddr;
     }
 
     public void setOpponentAddr(InetAddress opponentAddr) {
         this.opponentAddr = opponentAddr;
-    }       
+    }
 }
