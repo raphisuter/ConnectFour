@@ -14,17 +14,20 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
- *
- * @author Markus
+ * Diese Klasse kontrolliert das Einstiegs GUI
+ * @author markus.birrer.01@stud.hslu.ch
  */
 public class WelcomeController {
 
     private WelcomeModel model;
     private WelcomeView view;
 
+    /**
+     * Konstruktor des WelcomeControllers
+     */
     public WelcomeController() {
-        this.model = new WelcomeModel();
-        this.view = new WelcomeView();
+        this.model = new WelcomeModel(); // Erzeugen des WelcomeModel
+        this.view = new WelcomeView(); // Erzeugen der WelcomeView
 
         this.view.addActionListenerSinglePlayer(new ActionListener() {
             @Override

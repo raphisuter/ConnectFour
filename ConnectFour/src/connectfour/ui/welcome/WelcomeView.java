@@ -41,6 +41,9 @@ public class WelcomeView {
     private JFrame frame;
     private JComboBox<String> strength;
 
+    /**
+     * Konstruktor, erzeugt das Welcome-GUI
+     */
     public WelcomeView() {
         createFrame();
 
@@ -56,15 +59,24 @@ public class WelcomeView {
         setupLayout();
     }
 
+    /**
+     * Methode um das Frame anzuzeigen
+     */
     public void show() {
         frame.setVisible(true);
     }
 
+    /**
+     * Methode um das Frame zu verbergen
+     */
     public void close() {
         frame.setVisible(false);
         frame.dispose();
     }
 
+    /**
+     * Methode um das Frame zu erzeugen
+     */
     private void createFrame() {
         frame = new JFrame(FRAME_TITLE);
         frame.setSize(600, 400);
@@ -74,10 +86,16 @@ public class WelcomeView {
         CenterWindowUtil.center(frame);
     }
 
+    /**
+     * Methode um das Layout zu erzeugen
+     */
     private void createLayout() {
         frame.setLayout(null);
     }
 
+    /**
+     * Methode um die Elemente dem Layout hinzuzufügen und korrekt zu skalieren
+     */
     private void setupLayout() {
 
         // Einzelspieler
@@ -112,6 +130,9 @@ public class WelcomeView {
 
     }
 
+    /**
+     * Methode um die Textlabels zu erzeugen
+     */
     private void createLabel() {
         textLabel1 = new JLabel(LABEL_TEXT1);
         textLabel2 = new JLabel(LABEL_TEXT2);
@@ -119,24 +140,39 @@ public class WelcomeView {
         textLabel4 = new JLabel(LABEL_TEXT4);
     }
 
+    /**
+     * Methode um den Knopf "Gegen den Computer" zu erzeugen
+     */
     private void createSinglePlayerButton() {
         singlePlayerButton = new JButton(BUTTON_SINGLE_PLAYER);
 
     }
 
+    /**
+     * Methode um den Knopf "Spiel eröffnen" zu erzeugen
+     */
     private void createMultiPlayerButtonOpen() {
         multiPlayerButtonOpen = new JButton(BUTTON_MULTI_PLAYERopen);
     }
 
+    /**
+     * Methode um den Knopf "Spiel beitreten" zu erzeugen
+     */
     private void createMultiPlayerButtonJoin() {
         multiPlayerButtonJoin = new JButton(BUTTON_MULTI_PLAYERjoin);
     }
 
+    /**
+     * Methode um die Schieber für die Anzahl Spalten und Zeilen des Spiels zu erzeugen
+     */
     private void createFieldSizeSliders() {
         sliderRows = createSlider(DefaultConfiguration.ROWS);
         sliderColumns = createSlider(DefaultConfiguration.COLUMNS);
     }
     
+    /**
+     * Methode um die Schwierigkeitslevels der Auswahlliste hinzuzufügen
+     */
     private void createStrength() {
         List<Object> str = new ArrayList<>();
         str.add(new KISimple());
@@ -145,6 +181,11 @@ public class WelcomeView {
         strength = new JComboBox(str.toArray());
     }
 
+    /**
+     * Methode um die Schieber zu definieren
+     * @param defaultValue
+     * @return slider
+     */
     private JSlider createSlider(int defaultValue) {
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 4, 20, defaultValue);
         
@@ -156,26 +197,50 @@ public class WelcomeView {
         return slider;
     }
     
+    /**
+     * Methode um dem Knopf "Gegen den Computer" den ActionListner hinzuzufügen
+     * @param Listener 
+     */
     public void addActionListenerSinglePlayer(ActionListener Listener) {
         singlePlayerButton.addActionListener(Listener);
     }
 
+    /**
+     * Methode um dem Knopf "Spiel eröffnen" den ActionListener hinzuzufügen
+     * @param Listener 
+     */
     public void addActionListenerMultiPlayerOpen(ActionListener Listener) {
         multiPlayerButtonOpen.addActionListener(Listener);
     }
 
+    /**
+     * Methode um dem Knopf "Spiel beitreten" den ActionListener hinzuzufügen
+     * @param Listener 
+     */
     public void addActionListenerMultiPlayerJoin(ActionListener Listener) {
         multiPlayerButtonJoin.addActionListener(Listener);
     }
 
+    /**
+     * Methode um die Anzahl Zeilen zu bekommen, anhand der Stellung des Schiebers
+     * @return 
+     */
     public int getRows() {
         return sliderRows.getValue();
     }
 
+    /**
+     * Methode um die Anzahl Spalten zu bekommen, anhand der Stellung des Schiebers
+     * @return 
+     */
     public int getColumns() {
         return sliderColumns.getValue();
     }
     
+    /**
+     * Methode um die Auswahl des Schwierigkeitslevel zu erhalten
+     * @return 
+     */
     public KI getStrength() {
         return (KI) strength.getSelectedItem();
     }

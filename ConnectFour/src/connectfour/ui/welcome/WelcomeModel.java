@@ -1,8 +1,8 @@
 package connectfour.ui.welcome;
 
 /**
- *
- * @author Markus
+ * Diese Klasse handelt die Daten des Welcome-GUI's
+ * @author markus.birrer.01@stud.hslu.ch
  */
 public class WelcomeModel {
 

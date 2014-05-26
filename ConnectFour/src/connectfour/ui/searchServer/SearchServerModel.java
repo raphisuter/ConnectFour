@@ -7,8 +7,9 @@
 package connectfour.ui.searchServer;
 
 /**
- *
- * @author Markus
+ * Diese Klasse wird in diesem Projekt nicht gebraucht, die Daten werden einfachheitshalber direkt in 
+ * der View gehandelt. Es handelt sich um nur eine Liste, welche eigentlich hierhin gehören würde
+ * @author markus.birrer.01@stud.hslu.ch
  */
 public class SearchServerModel {
     

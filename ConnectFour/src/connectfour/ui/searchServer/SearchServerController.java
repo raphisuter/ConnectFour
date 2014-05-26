@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
- * @author Markus
+ * Klasse welches das SearchServer-GUI kontrolliert
+ * @author markus.birrer.01@stud.hslu.ch
  */
 public class SearchServerController {
 
